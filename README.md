@@ -1,4 +1,4 @@
-reactSport PRUEBA LOLI
+reactSport
 
 # Getting Started with Create React App
 

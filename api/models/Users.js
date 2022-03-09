@@ -1,7 +1,15 @@
 const { Model, DataTypes } = require("sequelize");
 const db = require("../config/db");
+const bcrypt = require("bcrypt");
 
-class Users extends Model {}
+class Users extends Model {
+  hash(password, salt) {
+    return bcrypt.hash(password, salt);
+  }
+  setSuperadmin() {
+    Users.update({ rol: "superadmin" }, { where: { id: 1 } });
+  }
+}
 
 Users.init(
   {
@@ -11,6 +19,13 @@ Users.init(
       allowNull: false,
       unique: true,
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    salt: {
+      type: DataTypes.STRING,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -19,13 +34,12 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    adress: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     rol: {
       type: DataTypes.STRING,
-      defaultValue: "user",
     },
   },
   {
@@ -34,6 +48,18 @@ Users.init(
     modelName: "users", // We need to choose the model name
   }
 );
+
+Users.afterCreate(async (user) => {
+  const id = user.id;
+  id === 1 ? user.setSuperadmin() : (user.rol = "user");
+});
+
+Users.beforeCreate(async (user) => {
+  const salt = await bcrypt.genSalt(16);
+  const hash = await user.hash(user.password, salt);
+  user.salt = salt;
+  user.password = hash;
+});
 
 // the defined model is the class itself
 module.exports = Users;

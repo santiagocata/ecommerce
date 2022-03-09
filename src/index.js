@@ -1,11 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App"
-import {Provider} from "react-redux"
+// import {Provider} from "react-redux"
 import {BrowserRouter} from 'react-router-dom'
-import store from "./state/store"
+// import store from "./state/store"
+import { ChakraProvider } from '@chakra-ui/react'
+import {theme} from './resources/theme'
 
 // import * as serviceWorker from "./serviceWorker"
 
 
-ReactDOM.render(<BrowserRouter><App/></BrowserRouter>, document.getElementById("root"))
+ReactDOM.render(
+<BrowserRouter>
+<ChakraProvider  theme={theme}>
+<App/>
+</ChakraProvider>
+</BrowserRouter>, 
+document.getElementById("root"))
+

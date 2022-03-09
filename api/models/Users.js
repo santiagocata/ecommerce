@@ -36,6 +36,4 @@ Users.init(
 );
 
 // the defined model is the class itself
-console.log(Users === db.models.users); // true
-
 module.exports = Users;

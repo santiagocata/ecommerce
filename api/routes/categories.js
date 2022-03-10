@@ -1,24 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-const { Categories } = require("../models");
+const { CategoriesController } = require("../controllers");
 
-//Busca todos los productos cuando es /home
-router.get("/", async (req, res, next) => {
-  const categories = await Categories.findAll();
-  res.status(200).send(categories);
-});
+//Search all categories
+router.get("/", CategoriesController.getAll);
 
-router.post("/", async (req, res, next) => {
-  try {
-    const { name } = req.body;
-    const newCategory = await Categories.create({
-      name,
-    });
-    res.status(200).send(newCategory);
-  } catch (error) {
-    console.error(error);
-  }
-});
+///////MUST BE SUPERADMIN OR ADMIN FOR ACTIONS BELLOW
+//create new product category
+router.post("/", CategoriesController.create);
+//Delete category
+router.delete("/", CategoriesController.delete);
+//Edit category name
+router.put("/", CategoriesController.edit);
 
 module.exports = router;

@@ -40,6 +40,7 @@ Users.init(
     },
     rol: {
       type: DataTypes.STRING,
+      defaultValue: "user",
     },
   },
   {
@@ -51,7 +52,7 @@ Users.init(
 
 Users.afterCreate(async (user) => {
   const id = user.id;
-  id === 1 ? user.setSuperadmin() : (user.rol = "user");
+  if (id === 1) user.setSuperadmin();
 });
 
 Users.beforeCreate(async (user) => {

@@ -47,7 +47,7 @@ router.delete("/delete", async (req, res, next) => {
     if (controlIdExist) {
       const { rol } = req.user;
       if (rol === "superadmin" || rol === "admin") {
-        const userDeleted = Users.destroy({ where: { id } });
+        const userDeleted = await Users.destroy({ where: { id } });
       } else {
         res.sendStatus(401);
       }
@@ -65,12 +65,21 @@ router.put("/setadmin", async (req, res, next) => {
     //Front send user ID to upgrade to admin role
     const { id } = req.body;
     //control if id exist in DB
+    if (!id) {
+      res.sendStatus(409);
+    }
     const controlIdExist = await Users.findAll({ where: { id } });
 
     if (controlIdExist) {
+      if (!req.user) {
+        res.sendStatus(401);
+      }
       const { rol } = req.user;
       if (rol === "superadmin") {
-        const newAdmin = Users.update({ rol: "admin" }, { where: { id } });
+        const newAdmin = await Users.update(
+          { rol: "admin" },
+          { where: { id } }
+        );
         res.status(201).send(newAdmin);
       } else {
         res.sendStatus(401);

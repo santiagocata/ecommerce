@@ -30,8 +30,12 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+    <div>
+      <footer></footer>
     </div>
+  </div> 
   );
 };
+
 
 export default App;

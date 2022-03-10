@@ -30,25 +30,32 @@ const Carousel = () => {
   const side = useBreakpointValue({ base: '30%', md: '40px' });
   const cards = [
     {
-      title: 'Design Projects 1',
-      text:
-        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
+      title: 'Camping',
+      /* text:
+        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        'https://images.pexels.com/photos/5992142/pexels-photo-5992142.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     },
     {
-      title: 'Design Projects 2',
-      text:
-        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
+      title: 'Deportes acuáticos',
+      /* text:
+        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/869258/pexels-photo-869258.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        'https://images.pexels.com/photos/2103783/pexels-photo-2103783.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     },
     {
-      title: 'Design Projects 3',
-      text:
-        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
+      title: 'Montaña',
+      /* text:
+        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/951076/pexels-photo-951076.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+    },
+    {
+      title: 'Nieve',
+      /* text:
+        "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
+      image:
+        'https://images.pexels.com/photos/8532484/pexels-photo-8532484.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     },
   ];
 
@@ -99,7 +106,7 @@ const Carousel = () => {
         {cards?.map((card, index) => (
           <Box
             key={index}
-            height={'6xl'}
+            height={'xl'}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
@@ -117,7 +124,7 @@ const Carousel = () => {
                 <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
                   {card.title}
                 </Heading>
-                <Text fontSize={{ base: 'md', lg: 'lg' }} color="GrayText">
+                <Text fontSize={{ base: 'md', lg: 'lg' }} color="black" fontWeight='bold' >
                   {card.text}
                 </Text>
               </Stack>

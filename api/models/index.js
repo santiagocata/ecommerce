@@ -11,7 +11,7 @@ Reviews.belongsTo(Users);
 Products.belongsTo(Categories);
 CartItems.belongsTo(Users);
 CartItems.belongsTo(Products);
-OrderItems.hasOne(CartItems);
+OrderItems.belongsTo(CartItems);
 FullOrders.hasMany(OrderItems);
 
 module.exports = {

@@ -68,7 +68,7 @@ import {
           <Image
           w='300px'
           h='300px'
-            src={data.img}
+            src={data.image}
             alt={`Picture of ${data.name}`}
             roundedTop="lg"
           />
@@ -102,7 +102,7 @@ import {
                 <Box as="span" color={'gray.600'} fontSize="lg">
                   $
                 </Box >
-                {data.price.toFixed(2)}
+                {data.price}
               </Box>
             </Flex>
           </Box>

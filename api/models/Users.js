@@ -18,10 +18,18 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isAlphanumeric: true,
+        min: 8
+      },
+
     },
     salt: {
       type: DataTypes.STRING,

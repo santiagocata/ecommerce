@@ -45,9 +45,10 @@ import {
   }
   
   function ProductAddToCart({data}) {
-     
+   
+    
     return (
-      <Flex p={50} w="full" alignItems="center" justifyContent="center">
+      <Flex  p={50} w="full" alignItems="center" justifyContent="center">
         <Box
           bg={useColorModeValue('white', 'gray.800')}
           maxW="sm"
@@ -55,7 +56,7 @@ import {
           rounded="lg"
           shadow="lg"
           position="relative">
-          {data.isNew && (
+          {/* {data.isNew && (
             <Circle
               size="10px"
               position="absolute"
@@ -63,7 +64,7 @@ import {
               right={2}
               bg="red.200"
             />
-          )}
+          )} */}
   
           <Image
           w='300px'

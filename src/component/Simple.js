@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import {
   Box,
   chakra,
@@ -19,14 +22,16 @@ import {
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 
-const data = {
-  name: "Kayak",
-  img: "https://images.pexels.com/photos/2749500/pexels-photo-2749500.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-  price: 5000,
-  rating: 3.5,
-};
-
 export default function Simple() {
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+
+  axios
+    .get(`/products/${id}`)
+    .then((result) => result.data)
+    .then((producto) => setProduct(producto))
+    .catch((err) => console.log(err));
+    
   return (
     <Container maxW={"7xl"}>
       <SimpleGrid
@@ -38,11 +43,11 @@ export default function Simple() {
           <Image
             rounded={"md"}
             alt={"product image"}
-            src={data.img}
+            src={product.image}
             fit={"cover"}
             align={"center"}
             w={"100%"}
-            h={{ base: "100%", sm: "400px", lg: "500px" }}
+            h={{ base: "100%", sm: "500px", lg: "700px" }}
           />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -52,14 +57,14 @@ export default function Simple() {
               fontWeight={600}
               fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
             >
-              <h2>{data.name}</h2>
+              <h2>{product.name}</h2>
             </Heading>
             <Text
               color={useColorModeValue("gray.900", "gray.400")}
               fontWeight={300}
               fontSize={"2xl"}
             >
-              $ {data.price}
+              $ {product.price}
             </Text>
           </Box>
 
@@ -81,16 +86,10 @@ export default function Simple() {
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                 diam nonumy eirmod tempor invidunt ut labore
               </Text> */}
-              <Text fontSize={"lg"}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                aliquid amet at delectus doloribus dolorum expedita hic, ipsum
-                maxime modi nam officiis porro, quae, quisquam quos
-                reprehenderit velit? Natus, totam.
-              </Text>
+              <Text fontSize={"lg"}>{product.description}</Text>
             </VStack>
-       
 
-            <Box w="100%">
+            {/* <Box w="100%">
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
                 color={useColorModeValue("yellow.500", "yellow.300")}
@@ -115,7 +114,7 @@ export default function Simple() {
                   Mediano
                 </ListItem>
               </List>
-            </Box>
+            </Box> */}
           </Stack>
 
           <Button

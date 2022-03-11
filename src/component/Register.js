@@ -60,10 +60,10 @@ const Register = () => {
             <Stack spacing={4}>
               <HStack>
                 <Box>
-                  <FormControl id="firstName" isRequired>
+                  <FormControl id="name" isRequired>
                     <FormLabel>Nombre </FormLabel>
                     <Input
-                      {...register("name", { required: true })}
+                      {...register("name", { required: true})}
                       type="text"
                     />
                   </FormControl>
@@ -72,7 +72,7 @@ const Register = () => {
                   <FormControl id="lastName">
                     <FormLabel>Apellido</FormLabel>
                     <Input
-                      {...register("lastName", { required: true })}
+                      {...register("lastName", { required: true})}
                       type="text"
                     />
                   </FormControl>
@@ -92,26 +92,23 @@ const Register = () => {
                     required: "Required",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                      message: "Ingrese uun email valido",
+                      message: "Ingrese un email valido",
                     },
                   })}
                   type="email"
                 />
-                {}
+              <ErrorMessage
+                        errors={errors}
+                        name="email"
+                        render={({ message }) => <p>{message}</p>}
+                      />
               </FormControl>
-
               <FormControl id="password" isRequired>
                 <FormLabel>Contraseña</FormLabel>
                 <InputGroup>
                   <Input
-                    {...register("password", { required: true, minLength: 8 })}
+                    {...register("password", { required: true, minLength: 8})}
                     type={showPassword ? "text" : "password"}
-                  />
-                  <ErrorMessage errors={errors} name="password" />
-                  <ErrorMessage
-                    errors={errors}
-                    name="singleErrorInput"
-                    render={({ message }) => <p>{"message"}</p>}
                   />
                   <InputRightElement h={"full"}>
                     <Button
@@ -124,6 +121,11 @@ const Register = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                <ErrorMessage
+                        errors={errors}
+                        name="password"
+                        render={({ message }) => <p>Ingrese al menos 8 caracteres</p>}
+                      />
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button

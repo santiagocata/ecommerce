@@ -33,8 +33,13 @@ const Register = () => {
   } = useForm();
   const navigate = useNavigate();
 
+
+
   const onSubmit = (data) => {
-    axios.post("/signin", data).then(() => navigate("/login"));
+    axios.post("/signin", data)
+    .then(() => navigate("/login"))
+    .catch(() => alert('El email ingrsado ya esta asociado a una de nuestras cuentas, a continuación será redirigido para que inicie sesion'))
+    .then(()=> navigate("/login"))
   };
 
   return (
@@ -63,17 +68,45 @@ const Register = () => {
                   <FormControl id="name" isRequired>
                     <FormLabel>Nombre </FormLabel>
                     <Input
-                      {...register("name", { required: true})}
-                      type="text"
+                    {...register("name", {
+                      required: true,
+                      pattern: {
+                        value: /^([a-zA-Z]+)(\s[a-zA-Z]+)*$/,
+                        message: "Ingrese un nombre valido",
+                      },
+                    })}
+                    type="text"
+                  />
+                   <ErrorMessage
+                      errors={errors}
+                      name="name"
+                      render={({ message }) => <p>{message}</p>}
+
                     />
+                      
+                        
+                     
+                    
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="lastName">
                     <FormLabel>Apellido</FormLabel>
                     <Input
-                      {...register("lastName", { required: true})}
-                      type="text"
+                     {...register("lastName", {
+                      required: true,
+                      pattern: {
+                        value: /^([a-zA-Z]+)(\s[a-zA-Z]+)*$/,
+                        message: "Ingrese un apellido valido",
+                      },
+                    })}
+                    type="text"
+                  />
+                   <ErrorMessage
+                      errors={errors}
+                      name="lastName"
+                      render={({ message }) => <p>{message}</p>}
+
                     />
                   </FormControl>
                 </Box>
@@ -89,27 +122,32 @@ const Register = () => {
                 <FormLabel>Email</FormLabel>
                 <Input
                   {...register("email", {
-                    required: "Required",
+                    required: true,
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                      message: "Ingrese un email valido",
+                       message: "Ingrese un email valido", 
+
                     },
                   })}
                   type="email"
                 />
-              <ErrorMessage
-                        errors={errors}
-                        name="email"
-                        render={({ message }) => <p>{message}</p>}
-                      />
+     <ErrorMessage
+        errors={errors}
+        name="email"
+        render={({ message }) => <p>{message}</p>}
+      /> 
+
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Contraseña</FormLabel>
                 <InputGroup>
                   <Input
-                    {...register("password", { required: true, minLength: 8})}
+                    {...register("password", { required: true,
+                    minLength:8})}
                     type={showPassword ? "text" : "password"}
                   />
+              
+
                   <InputRightElement h={"full"}>
                     <Button
                       variant={"ghost"}
@@ -119,13 +157,18 @@ const Register = () => {
                     >
                       {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
+
                   </InputRightElement>
+                 
+
+                 
                 </InputGroup>
                 <ErrorMessage
-                        errors={errors}
-                        name="password"
-                        render={({ message }) => <p>Ingrese al menos 8 caracteres</p>}
-                      />
+                    errors={errors}
+                    name="password"
+                    render={({ message }) => <p>Ingrese al menos 8 caracteres</p>}
+                  />
+
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button

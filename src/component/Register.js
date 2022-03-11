@@ -65,7 +65,7 @@ const Register = () => {
             <Stack spacing={4}>
               <HStack>
                 <Box>
-                  <FormControl id="firstName" isRequired>
+                  <FormControl id="name" isRequired>
                     <FormLabel>Nombre </FormLabel>
                     <Input
                     {...register("name", {
@@ -81,6 +81,7 @@ const Register = () => {
                       errors={errors}
                       name="name"
                       render={({ message }) => <p>{message}</p>}
+
                     />
                       
                         
@@ -105,6 +106,7 @@ const Register = () => {
                       errors={errors}
                       name="lastName"
                       render={({ message }) => <p>{message}</p>}
+
                     />
                   </FormControl>
                 </Box>
@@ -124,6 +126,7 @@ const Register = () => {
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                        message: "Ingrese un email valido", 
+
                     },
                   })}
                   type="email"
@@ -133,8 +136,8 @@ const Register = () => {
         name="email"
         render={({ message }) => <p>{message}</p>}
       /> 
-              </FormControl>
 
+              </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Contraseña</FormLabel>
                 <InputGroup>
@@ -144,6 +147,7 @@ const Register = () => {
                     type={showPassword ? "text" : "password"}
                   />
               
+
                   <InputRightElement h={"full"}>
                     <Button
                       variant={"ghost"}
@@ -164,6 +168,7 @@ const Register = () => {
                     name="password"
                     render={({ message }) => <p>Ingrese al menos 8 caracteres</p>}
                   />
+
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button

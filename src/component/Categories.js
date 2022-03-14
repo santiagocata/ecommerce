@@ -1,29 +1,24 @@
-import Carousel from "./Carousel";
 import Grid from "./Grid";
 import React, { useEffect, useState } from "react";
+
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const Home = () => {
+const Categories = () => {
+  const { id } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/products")
+      .get(`/products/by/category/${id}`)
       .then((result) => result.data)
       .then((products) => {
         setProducts(products);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
-  return (
-    <div>
-      <Carousel />
-      <div>
-        <Grid products={products} />
-      </div>
-    </div>
-  );
+  return <Grid products={products} />;
 };
 
-export default Home;
+export default Categories;

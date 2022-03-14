@@ -1,6 +1,6 @@
+import React, { useState, useEffect } from "react";
 import Reviews from "./Reviews";
 import FormReviews from "./FormReviews";
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -31,11 +31,9 @@ export default function Simple() {
     axios
       .get(`/products/${id}`)
       .then((result) => result.data)
-      .then((producto) =>{
-        setProduct(producto)
-      } )
+      .then((producto) => setProduct(producto))
       .catch((err) => console.log(err));
-  }, []);
+  }, {});
 
   return (
     <Container maxW={"7xl"}>

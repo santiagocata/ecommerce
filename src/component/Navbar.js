@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as Linked, useNavigate } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../state/user";
 
-const Links = ["Hombres", "Mujeres", "Niños"];
+
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -74,15 +74,16 @@ export default function WithAction() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
+            <Link to='/'>
             <Box size={"lg"}>Productos</Box>
+            </Link>
+            
             <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+      
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -121,9 +122,6 @@ export default function WithAction() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
             </Stack>
           </Box>
         ) : null}

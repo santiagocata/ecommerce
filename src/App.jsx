@@ -3,6 +3,7 @@ import Home from "./component/Home"
 import Register from "./component/Register";
 import Login from "./component/Login"
 import Simple from './component/Simple'
+import Footer from './component/Footer'
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -34,7 +35,10 @@ const App = () => {
 
       </Routes>
     <div>
-      <footer></footer>
+      <footer>
+
+      <Footer />
+      </footer>
     </div>
   </div> 
   );

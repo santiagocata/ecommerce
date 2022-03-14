@@ -6,6 +6,9 @@ import Simple from "./component/Simple";
 import Grid from "./component/Grid";
 import Categories from "./component/Categories";
 
+import Footer from './component/Footer'
+
+
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -35,9 +38,12 @@ const App = () => {
         <Route path="/categories/:id" element={<Categories />} />
         <Route path="/search" element={<Grid products={state}/>} />
       </Routes>
-      <div>
-        <footer></footer>
-      </div>
+
+    <div>
+      <footer>
+
+      <Footer />
+      </footer>
     </div>
   );
 };

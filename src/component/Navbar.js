@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as Linked, useNavigate } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -28,7 +28,7 @@ import React, { useEffect, useState } from "react";
 
 import SearchInput from "./Search";
 
-const Links = ["Hombres", "Mujeres", "Niños"];
+
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link

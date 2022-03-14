@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const db = require("../config/db");
 
-class CartItems extends Model { }
+class CartItems extends Model {}
 
 CartItems.init(
   {
@@ -10,8 +10,12 @@ CartItems.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: 999
-      }
+        max: 999,
+      },
+    },
+    state: {
+      type: DataTypes.STRING,
+      defaultValue: "unconfirmed",
     },
   },
   {

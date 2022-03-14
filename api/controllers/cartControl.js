@@ -8,7 +8,9 @@ class CartItemsController {
     }
     try {
       const { id } = req.user;
-      const userCartItems = await CartItems.findAll({ where: { userId: id } });
+      const userCartItems = await CartItems.findAll({
+        where: { userId: id, state: "unconfirmed" },
+      });
       res.status(200).send(userCartItems);
     } catch (error) {
       console.error(error);
@@ -41,6 +43,12 @@ class CartItemsController {
     try {
       //FRONT MUST SEND cartItemID to DELETE
       const { cartItemId } = req.body;
+      //Control cartitem state
+      const cartItem = await CartItems.findByPk(cartItemId);
+      if (cartItem.state !== "unconfirmed") {
+        res.sendStatus(401);
+      }
+      //////remove cartItem
       const removedCartItem = await CartItems.destroy({
         where: { id: cartItemId },
       });
@@ -57,6 +65,12 @@ class CartItemsController {
     try {
       //FRONT MUST SEND cartItemID to EDIT
       const { cartItemId, quantity } = req.body;
+      //Control cartitem state
+      const cartItem = await CartItems.findByPk(cartItemId);
+      if (cartItem.state !== "unconfirmed") {
+        res.sendStatus(401);
+      }
+      ////update cartItem
       const updatedCardItem = await CartItems.update(
         { quantity },
         { where: { id: cartItemId } }

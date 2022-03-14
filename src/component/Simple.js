@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -26,12 +26,14 @@ export default function Simple() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
 
-  axios
-    .get(`/products/${id}`)
-    .then((result) => result.data)
-    .then((producto) => setProduct(producto))
-    .catch((err) => console.log(err));
-    
+  useEffect(() => {
+    axios
+      .get(`/products/${id}`)
+      .then((result) => result.data)
+      .then((producto) => setProduct(producto))
+      .catch((err) => console.log(err));
+  }, {});
+
   return (
     <Container maxW={"7xl"}>
       <SimpleGrid

@@ -1,7 +1,15 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model, DataTypes, Op } = require("sequelize");
 const db = require("../config/db");
 
-class Products extends Model {}
+class Products extends Model {
+  static findByName = function (inputName) {
+    return Products.findAll({
+      where: {
+        name: { [Op.iLike]: `%${inputName}%` },
+      },
+    });
+  };
+}
 
 Products.init(
   {

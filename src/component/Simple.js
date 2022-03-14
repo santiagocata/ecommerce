@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Reviews from "./Reviews";
+import FormReviews from "./FormReviews";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   Box,
   chakra,
@@ -15,14 +18,12 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  VisuallyHidden,
-  List,
-  ListItem,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+
 import { MdLocalShipping } from "react-icons/md";
 
 export default function Simple() {
+  const usuario = useSelector((state) => state.user);
   const { id } = useParams();
   const [product, setProduct] = useState({});
 
@@ -80,49 +81,14 @@ export default function Simple() {
             }
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
-              {/* <Text
-                color={useColorModeValue("gray.500", "gray.400")}
-                fontSize={"2xl"}
-                fontWeight={"300"}
-              >
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore
-              </Text> */}
               <Text fontSize={"lg"}>{product.description}</Text>
             </VStack>
-
-            {/* <Box w="100%">
-              <Text
-                fontSize={{ base: "16px", lg: "18px" }}
-                color={useColorModeValue("yellow.500", "yellow.300")}
-                fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"4"}
-              >
-                Detalles del producto
-              </Text>
-
-              <List spacing={2}>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Color:
-                  </Text>{" "}
-                  Verde
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Tamaño:
-                  </Text>{" "}
-                  Mediano
-                </ListItem>
-              </List>
-            </Box> */}
           </Stack>
 
           <Button
             rounded={"none"}
             w={"full"}
-            mt={8}
+            mt={5}
             size={"lg"}
             py={"7"}
             bg={useColorModeValue("gray.900", "gray.50")}
@@ -135,13 +101,17 @@ export default function Simple() {
           >
             Agregar al carrito
           </Button>
+          <Flex justifyContent="space-between" alignContent="center"></Flex>
 
           <Stack direction="row" alignItems="center" justifyContent={"center"}>
             <MdLocalShipping />
             <Text>2-3 días hábiles de entrega</Text>
           </Stack>
+          {usuario.id ? <FormReviews id={id} /> : <></>}
         </Stack>
       </SimpleGrid>
+
+      <Reviews />
     </Container>
   );
 }

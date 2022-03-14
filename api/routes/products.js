@@ -14,8 +14,8 @@ router.get("/:productId", async (req, res, next) => {
   res.status(200).send(product);
 });
 
-router.get("/by/name", async (req, res, next) => {
-  const products = await Products.findAll({where : {name : req.body.name}});
+router.post("/by/name", async (req, res, next) => {
+  const products = await Products.findByName(req.body.name);
   res.status(200).send(products);
 });
 

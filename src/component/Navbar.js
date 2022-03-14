@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as Linked, useNavigate } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -17,13 +17,18 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Image,
+  Text,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../state/user";
+import React, { useEffect, useState } from "react";
 
-const Links = ["Hombres", "Mujeres", "Niños"];
+import SearchInput from "./Search";
+
+
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -41,16 +46,27 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 );
 
 export default function WithAction() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handeLogOut = () =>{
-    axios.post("/logout")
-    .then(() => {
-      dispatch(setUser({}))
-      navigate("/")
-    })
-  } 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/categories")
+      .then((result) => result.data)
+      .then((categories) => {
+        setCategories(categories);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handeLogOut = () => {
+    axios.post("/logout").then(() => {
+      dispatch(setUser({}));
+      navigate("/");
+    });
+  };
 
   const usuario = useSelector((state) => state.user);
 
@@ -73,19 +89,55 @@ export default function WithAction() {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={"center"}>
-            <Box size={"lg"}>Productos</Box>
+          <HStack alignItems={"center"}>
+            <Linked to="/">
+              <HStack>
+                <Box size={"lg"}>
+                  <Image
+                    boxSize="40px"
+                    src="https://w7.pngwing.com/pngs/186/205/png-transparent-react-native-react-logos-brands-icon.png"
+                  />
+                </Box>
+                <Box>
+                  <Text fontSize="xl" fontWeight="bold">
+                    React Sport
+                  </Text>
+                </Box>
+              </HStack>
+            </Linked>
+
             <HStack
               as={"nav"}
-              spacing={4}
+              pl={8}
+              spacing={8}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  colorScheme="blue"
+                  rightIcon={<ChevronDownIcon />}
+                >
+                  Categorías
+                </MenuButton>
+                <MenuList>
+                  {categories?.map((category) => {
+                    return (
+                      <Linked to={`/categories/${category.id}`}>
+                        <MenuItem fontSize="xl" fontWeight="bold">
+                          {category.name}
+                        </MenuItem>
+                      </Linked>
+                    );
+                  })}
+                </MenuList>
+              </Menu>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
+            <Flex display={{ base: "none", md: "flex" }} ml={10}>
+              <SearchInput />
+            </Flex>
             <Box>
               <Button variant={"solid"} colorScheme={"blue"} size={"sm"} mr={4}>
                 <FiShoppingCart />
@@ -93,11 +145,30 @@ export default function WithAction() {
             </Box>
 
             <Menu>
-              {usuario.id ? <>
-              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-                <Avatar bg={"blue.500"} size={"sm"} src={""} />
-                <p>{usuario.name}</p>
-              </MenuButton> </> : <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}><Avatar size={"sm"} src={""} /> </MenuButton>}
+              {usuario.id ? (
+                <>
+                  <MenuButton
+                    as={Button}
+                    rounded={"full"}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                  >
+                    <Avatar bg={"blue.500"} size={"sm"} src={""} />
+                    <p>{usuario.name}</p>
+                  </MenuButton>{" "}
+                </>
+              ) : (
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar size={"sm"} src={""} />{" "}
+                </MenuButton>
+              )}
               {usuario.id ? (
                 <MenuList>
                   <MenuItem>Configuración</MenuItem>
@@ -121,9 +192,27 @@ export default function WithAction() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  colorScheme="blue"
+                  rightIcon={<ChevronDownIcon />}
+                >
+                  Categorías
+                </MenuButton>
+                <MenuList>
+                  {categories?.map((category) => {
+                    return (
+                      <Linked to={`/categories/${category.id}`}>
+                        <MenuItem fontSize="xl" fontWeight="bold">
+                          {category.name}
+                        </MenuItem>
+                      </Linked>
+                    );
+                  })}
+                </MenuList>
+              </Menu>
+              <SearchInput />
             </Stack>
           </Box>
         ) : null}

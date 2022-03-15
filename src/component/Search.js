@@ -3,7 +3,7 @@ import { Stack, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
-import { useContext, useState } from "react";
+import {useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 

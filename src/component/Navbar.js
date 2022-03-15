@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../state/user";
 import React, { useEffect, useState } from "react";
-
+import store from "../state/store";
 import SearchInput from "./Search";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
@@ -37,7 +37,6 @@ const NavLink = ({ children }: { children: ReactNode }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={"#"}
   >
     {children}
   </Link>
@@ -46,7 +45,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 export default function WithAction() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const useRol = useSelector((state) => state.user.rol);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -130,21 +129,24 @@ export default function WithAction() {
                   })}
                 </MenuList>
               </Menu>
-              <Linked to="/admin">
-                <Button
-                  fontSize="xl"
-                  fontWeight="bold"
-                  height="40px"
-                  width="150px"
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={"blue.500"}
-                  color={"white"}
-                  size={"lg"}
-                >
-                  Admin
-                </Button>
-              </Linked>
+              {useRol === "superadmin" || useRol === "admin" ? (
+                <Linked to="/admin">
+                  <Button
+                    height="40px"
+                    loadingText="Submitting"
+                    size="lg"
+                    bg={"blue.500"}
+                    color={"white"}
+                    _hover={{
+                      bg: "blue.500",
+                    }}
+                  >
+                    Panel Admin
+                  </Button>
+                </Linked>
+              ) : (
+                <></>
+              )}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -184,7 +186,9 @@ export default function WithAction() {
               )}
               {usuario.id ? (
                 <MenuList>
-                  <MenuItem>Configuración</MenuItem>
+                  <Linked to="/configuracion">
+                    <MenuItem>Configuración</MenuItem>
+                  </Linked>
                   <MenuItem>Historial</MenuItem>
                   <MenuItem onClick={handeLogOut}>Cerrar Sesión</MenuItem>
                 </MenuList>

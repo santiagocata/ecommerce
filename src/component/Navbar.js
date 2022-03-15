@@ -92,10 +92,10 @@ export default function WithAction() {
           <HStack alignItems={"center"}>
             <Linked to="/">
               <HStack>
-                <Box size={"lg"}>
+                <Box boxSize="40px">
                   <Image
                     boxSize="40px"
-                    src="https://w7.pngwing.com/pngs/186/205/png-transparent-react-native-react-logos-brands-icon.png"
+                    src={require("../assets/img/pngwing.com.png")}
                   />
                 </Box>
                 <Box>

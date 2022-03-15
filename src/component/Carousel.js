@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   IconButton,
@@ -7,10 +7,11 @@ import {
   Heading,
   Text,
   Container,
-} from '@chakra-ui/react';
+  Button,
+} from "@chakra-ui/react";
 
-import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
-import Slider from 'react-slick';
+import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
+import Slider from "react-slick";
 
 const settings = {
   dots: true,
@@ -24,47 +25,48 @@ const settings = {
   slidesToScroll: 1,
 };
 const Carousel = () => {
-  const [slider, setSlider] = React.useState('');
-//   <Slider | null>
-  const top = useBreakpointValue({ base: '90%', md: '50%' });
-  const side = useBreakpointValue({ base: '30%', md: '40px' });
+  const [slider, setSlider] = React.useState("");
+  //   <Slider | null>
+  const top = useBreakpointValue({ base: "90%", md: "50%" });
+  const side = useBreakpointValue({ base: "30%", md: "40px" });
   const cards = [
     {
-      title: 'Camping',
+      title: "Camping",
       /* text:
         "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/5992142/pexels-photo-5992142.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        "https://images.pexels.com/photos/5992142/pexels-photo-5992142.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
     },
     {
-      title: 'Deportes acuáticos',
+      title: "Deportes acuáticos",
       /* text:
         "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/2103783/pexels-photo-2103783.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        "https://images.pexels.com/photos/2103783/pexels-photo-2103783.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
     },
     {
-      title: 'Montaña',
+      title: "Montaña",
       /* text:
         "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        "https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
     },
     {
-      title: 'Nieve',
+      title: "Nieve",
       /* text:
         "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.", */
       image:
-        'https://images.pexels.com/photos/8532484/pexels-photo-8532484.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+        "https://images.pexels.com/photos/8532484/pexels-photo-8532484.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
     },
   ];
 
   return (
     <Box
-      position={'relative'}
-      height={'600px'}
-      width={'full'}
-      overflow={'hidden'}>
+      position={"relative"}
+      height={"600px"}
+      width={"full"}
+      overflow={"hidden"}
+    >
       {/* CSS files for react-slick */}
       <link
         rel="stylesheet"
@@ -84,9 +86,10 @@ const Carousel = () => {
         position="absolute"
         left={side}
         top={top}
-        transform={'translate(0%, -50%)'}
+        transform={"translate(0%, -50%)"}
         zIndex={2}
-        onClick={() => slider?.slickPrev()}>
+        onClick={() => slider?.slickPrev()}
+      >
         <BiLeftArrowAlt size="40px" />
       </IconButton>
       {/* Right Icon */}
@@ -96,9 +99,10 @@ const Carousel = () => {
         position="absolute"
         right={side}
         top={top}
-        transform={'translate(0%, -50%)'}
+        transform={"translate(0%, -50%)"}
         zIndex={2}
-        onClick={() => slider?.slickNext()}>
+        onClick={() => slider?.slickNext()}
+      >
         <BiRightArrowAlt size="40px" />
       </IconButton>
       {/* Slider */}
@@ -106,25 +110,31 @@ const Carousel = () => {
         {cards?.map((card, index) => (
           <Box
             key={index}
-            height={'xl'}
+            height={"xl"}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
-            backgroundImage={`url(${card.image})`}>
+            backgroundImage={`url(${card.image})`}
+          >
             {/* This is the block you need to change, to customize the caption */}
             <Container size="container.lg" height="600px" position="relative">
               <Stack
                 spacing={6}
-                w={'full'}
-                maxW={'lg'}
+                w={"full"}
+                maxW={"lg"}
                 position="absolute"
                 top="50%"
-                transform="translate(0, -50%)">
-                <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
+                transform="translate(0, -50%)"
+              >
+                <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
                   {card.title}
                 </Heading>
-                <Text fontSize={{ base: 'md', lg: 'lg' }} color="black" fontWeight='bold' >
+                <Text
+                  fontSize={{ base: "md", lg: "lg" }}
+                  color="black"
+                  fontWeight="bold"
+                >
                   {card.text}
                 </Text>
               </Stack>
@@ -134,7 +144,6 @@ const Carousel = () => {
       </Slider>
     </Box>
   );
-}
-
+};
 
 export default Carousel;

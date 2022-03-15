@@ -28,8 +28,6 @@ import React, { useEffect, useState } from "react";
 
 import SearchInput from "./Search";
 
-
-
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
     px={2}
@@ -132,6 +130,21 @@ export default function WithAction() {
                   })}
                 </MenuList>
               </Menu>
+              <Linked to="/admin">
+                <Button
+                  fontSize="xl"
+                  fontWeight="bold"
+                  height="40px"
+                  width="150px"
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.500"}
+                  color={"white"}
+                  size={"lg"}
+                >
+                  Admin
+                </Button>
+              </Linked>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>

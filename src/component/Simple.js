@@ -18,6 +18,13 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  AspectRatio,
+  Input,
 } from "@chakra-ui/react";
 
 import { MdLocalShipping } from "react-icons/md";
@@ -26,7 +33,21 @@ export default function Simple() {
   const usuario = useSelector((state) => state.user);
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const [cant, setCant] = useState("");
 
+  const handlerCant = (e) => {
+    const cantN = parseInt(e.target.value);
+    setCant(cantN);
+  };
+  console.log(cant);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    axios.post("/cart", {
+      productId: id,
+      quantity: cant,
+    });
+  };
   useEffect(() => {
     axios
       .get(`/products/${id}`)
@@ -86,6 +107,7 @@ export default function Simple() {
           </Stack>
 
           <Button
+            onClick={handleClick}
             rounded={"none"}
             w={"full"}
             mt={5}
@@ -101,7 +123,11 @@ export default function Simple() {
           >
             Agregar al carrito
           </Button>
+
           <Flex justifyContent="space-between" alignContent="center"></Flex>
+
+          <Text fontSize={"lg"}>Cantidad:</Text>
+          <Input onChange={handlerCant}></Input>
 
           <Stack direction="row" alignItems="center" justifyContent={"center"}>
             <MdLocalShipping />

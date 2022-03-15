@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../state/user";
 import React, { useEffect, useState } from "react";
+import OrdersHistory from "./OrdersHistory";
+import Cart from "./Cart";
 
 import SearchInput from "./Search";
 
@@ -152,9 +154,7 @@ export default function WithAction() {
               <SearchInput />
             </Flex>
             <Box>
-              <Button variant={"solid"} colorScheme={"blue"} size={"sm"} mr={4}>
-                <FiShoppingCart />
-              </Button>
+              <Cart />
             </Box>
 
             <Menu>
@@ -185,7 +185,7 @@ export default function WithAction() {
               {usuario.id ? (
                 <MenuList>
                   <MenuItem>Configuración</MenuItem>
-                  <MenuItem>Historial</MenuItem>
+                  <OrdersHistory />
                   <MenuItem onClick={handeLogOut}>Cerrar Sesión</MenuItem>
                 </MenuList>
               ) : (

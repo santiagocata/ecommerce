@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./state/user";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Admin from './component/Admin'
+import Error from "./component/Register";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,14 +38,14 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/products/:id" element={<Simple />} />
         <Route path="/categories/:id" element={<Categories />} />
-        <Route path="/search" element={<Grid products={state}/>} />
+        <Route path="/search" element={<Grid products={state} />} />
+        <Route path="/admin" element={<Admin/>}/>
       </Routes>
-
-    <div>
-      <footer>
-
-      <Footer />
-      </footer>
+      <div>
+        <footer>
+          <Footer />
+        </footer>
+      </div>
     </div>
   );
 };

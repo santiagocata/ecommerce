@@ -83,10 +83,6 @@ const Register = () => {
                       render={({ message }) => <p>{message}</p>}
 
                     />
-                      
-                        
-                     
-                    
                   </FormControl>
                 </Box>
                 <Box>

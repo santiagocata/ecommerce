@@ -26,7 +26,7 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlphanumeric: true,
+
         min: 8
       },
 

@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import {useSelector } from "react-redux";
-import axios from 'axios'
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import {
   Box,
-  FormLabel,
   chakra,
   Textarea,
-  FormControl,
-  Input,
+  Select,
   Button,
   Flex,
 } from "@chakra-ui/react";
 
-export default function FormReviews({id}) {
+export default function FormReviews({ id }) {
   const usuario = useSelector((state) => state.user);
- 
+
   const [vote, setVote] = useState("");
   const [description, setDescription] = useState("");
 
+  const navigate = useNavigate();
 
   const handleVoteChange = (e) => {
     setVote(e.target.value);
@@ -39,7 +39,10 @@ export default function FormReviews({id}) {
         userId: usuario.id,
       })
       .then((respuesta) => respuesta.data)
-      .then((review) => console.log(review))
+      .then(() => {
+        alert("Tu comentario fue posteado");
+        navigate("/");
+      })
       .catch((err) => console.log("error", err));
   };
 
@@ -65,15 +68,18 @@ export default function FormReviews({id}) {
           >
             Qué te pareció el producto?
           </chakra.h3>
-          <Input
-            onChange={handleVoteChange}
-            value={vote}
-            placeholder="Puntuación (del 1 al 5)"
-            type="text"
-          />
-         
+     
+
+          <Select  onChange={handleVoteChange} placeholder="Puntuación (del 1 al 5)">
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </Select>
+
           <Textarea
-          mt={4}
+            mt={4}
             onChange={handleDescriptionChange}
             value={description}
             placeholder="Descripción"

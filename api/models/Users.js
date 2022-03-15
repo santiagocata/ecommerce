@@ -70,5 +70,7 @@ Users.beforeCreate(async (user) => {
   user.password = hash;
 });
 
+
+
 // the defined model is the class itself
 module.exports = Users;

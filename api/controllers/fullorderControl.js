@@ -92,6 +92,62 @@ class FullOrdersController {
       console.error(error);
     }
   }
+
+  // I. Ruta que devuelve todas las fullorders de todos los usuarios
+  //allOrders
+  static async allOrders(req, res) {
+    //user is login?
+    if (!req.user) {
+      res.sendStatus(401);
+    }
+    try {
+      const { rol } = req.user;
+
+      if (rol === "superadmin" || rol === "admin") {
+
+        //search all fullorders
+        const allFullOrders = await FullOrders.findAll();
+        if (!allFullOrders) {
+          res.status(404);
+        }
+
+        res.status(200).send(allFullOrders);
+      } else {
+        res.sendStatus(401);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // II. Ruta para el update del status de una fullorder
+  //
+  static async stateUpdate(req, res) {
+    //user is login?
+    if (!req.user) {
+      res.sendStatus(401);
+    }
+    try {
+      const { rol } = req.user;
+
+      if (rol === "superadmin" || rol === "admin") {
+
+        //search all fullorders
+        const updatedstate = await FullOrders.update({ state }, { where: { state: req.body.state } });
+
+        res.status(200).send(updatedstate);
+      } else {
+        res.sendStatus(401);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+
 }
 
 module.exports = FullOrdersController;

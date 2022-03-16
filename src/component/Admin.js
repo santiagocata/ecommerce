@@ -2,7 +2,7 @@ import Boton from "../commons/Boton";
 import { Link as Linked } from "react-router-dom";
 import Error from "../component/Error";
 import store from "../state/store";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Flex,
   Box,
@@ -27,7 +27,7 @@ function Admin() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Panel de Admin</Heading>
         </Stack>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8}>
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} align={"center"}>
           <Stack spacing={4}>
             <FormControl id="text">
               <Linked to="/admin/agregar">
@@ -41,6 +41,21 @@ function Admin() {
                   }}
                 >
                   Agregar Producto
+                </Button>
+              </Linked>
+            </FormControl>
+            <FormControl id="text">
+              <Linked to="/admin/crearcategoria">
+                <Button
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Crear Categoria
                 </Button>
               </Linked>
             </FormControl>
@@ -74,41 +89,42 @@ function Admin() {
                 </Button>
               </Linked>
             </FormControl>
-            {useRol === "superadmin" ?
-            <>
-            <FormControl>
-              <Linked to="/admin/agregaradmin">
-                <Button
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={"blue.400"}
-                  color={"white"}
-                  _hover={{
-                    bg: "blue.500",
-                  }}
-                >
-                  Agregar Admin
-                </Button>
-              </Linked>
-            </FormControl>
-            <FormControl>
-              <Linked to="/admin/eliminaradmin">
-                <Button
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={"blue.400"}
-                  color={"white"}
-                  _hover={{
-                    bg: "blue.500",
-                  }}
-                >
-                  Eliminar Admin
-                </Button>
-              </Linked>
-            </FormControl> 
-            </>
-            : <></>
-            }
+            {useRol === "superadmin" ? (
+              <>
+                <FormControl>
+                  <Linked to="/admin/agregaradmin">
+                    <Button
+                      loadingText="Submitting"
+                      size="lg"
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{
+                        bg: "blue.500",
+                      }}
+                    >
+                      Agregar Admin
+                    </Button>
+                  </Linked>
+                </FormControl>
+                <FormControl>
+                  <Linked to="/admin/deleteadmin">
+                    <Button
+                      loadingText="Submitting"
+                      size="lg"
+                      bg={"blue.400"}
+                      color={"white"}
+                      _hover={{
+                        bg: "blue.500",
+                      }}
+                    >
+                      Eliminar Admin
+                    </Button>
+                  </Linked>
+                </FormControl>
+              </>
+            ) : (
+              <></>
+            )}
           </Stack>
         </Box>
       </Stack>

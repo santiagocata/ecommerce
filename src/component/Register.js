@@ -187,9 +187,7 @@ const Register = () => {
                 >
                   Completar registro
                 </Button>
-              </Stack>
-              <Stack pt={6}>
-                <div>
+                <Stack >
                   <Button
                     size="md"
                     bg={"red.400"}
@@ -200,7 +198,7 @@ const Register = () => {
                     type="submit"
                     onClick={googleLogin}
                   >
-                    <FaGoogle style={{ margin: 10 }} />
+                    <FaGoogle style={{ margin: 4 }} />
                     Google
                   </Button>
                   <Button
@@ -213,7 +211,7 @@ const Register = () => {
                     type="submit"
                     onClick={facebookLogin}
                   >
-                    <FaFacebook style={{ margin: 10 }} />
+                    <FaFacebook style={{ margin: 4 }} />
                     Facebook
                   </Button>
                   <Button
@@ -226,10 +224,10 @@ const Register = () => {
                     type="submit"
                     onClick={githubLogin}
                   >
-                    <FaGithub style={{ margin: 10 }} />
+                    <FaGithub style={{ margin: 4 }} />
                     GitHub
                   </Button>
-                </div>
+                </Stack>
               </Stack>
             </Stack>
           </Box>

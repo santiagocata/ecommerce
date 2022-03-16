@@ -151,56 +151,50 @@ const Login = () => {
               >
                 Iniciar
               </Button>
+              <Stack >
+                  <Button
+                    size="md"
+                    bg={"red.400"}
+                    color={"white"}
+                    _hover={{
+                      bg: "red.500",
+                    }}
+                    type="submit"
+                    onClick={googleLogin}
+                  >
+                    <FaGoogle style={{ margin: 4 }} />
+                    Google
+                  </Button>
+                  <Button
+                    size="md"
+                    bg={"blue.600"}
+                    color={"white"}
+                    _hover={{
+                      bg: "blue.700",
+                    }}
+                    type="submit"
+                    onClick={facebookLogin}
+                  >
+                    <FaFacebook style={{ margin: 4 }} />
+                    Facebook
+                  </Button>
+                  <Button
+                    size="md"
+                    bg={"black"}
+                    color={"white"}
+                    _hover={{
+                      bg: "black.800",
+                    }}
+                    type="submit"
+                    onClick={githubLogin}
+                  >
+                    <FaGithub style={{ margin: 4 }} />
+                    GitHub
+                  </Button>
+                </Stack>
             </Stack>
           </form>
-          <div
-            style={{
-              margin: 10,
-              padding: 5,
-              display: Flex,
-              justifyContent: "space-evenly",
-            }}
-          >
-            <Button
-              size="lg"
-              bg={"red.400"}
-              color={"white"}
-              _hover={{
-                bg: "red.500",
-              }}
-              type="submit"
-              onClick={googleLogin}
-            >
-              <FaGoogle style={{ margin: 10 }} />
-              Google
-            </Button>
-            <Button
-              size="lg"
-              bg={"blue.600"}
-              color={"white"}
-              _hover={{
-                bg: "blue.700",
-              }}
-              type="submit"
-              onClick={facebookLogin}
-            >
-              <FaFacebook style={{ margin: 10 }} />
-              Facebook
-            </Button>
-            <Button
-              size="lg"
-              bg={"black"}
-              color={"white"}
-              _hover={{
-                bg: "black.800",
-              }}
-              type="submit"
-              onClick={githubLogin}
-            >
-              <FaGithub style={{ margin: 10 }} />
-              GitHub
-            </Button>
-          </div>
+          
         </Box>
       </Stack>
       <Box>

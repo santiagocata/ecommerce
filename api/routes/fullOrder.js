@@ -29,7 +29,7 @@ router.get("/all", FullOrdersController.allOrders);
 
 router.put("/updstate", FullOrdersController.stateUpdate);
 //CONTROL ROL SUPERADMIN O ADMIN
-//INPUT FULLORDER (REQ.BODY)
+//INPUT FULLORDER (REQ.BODY) REQ.BODY DEBE ENVIAR ID Y STATE
 //PROCESS
 
 // Description

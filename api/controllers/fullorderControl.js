@@ -128,9 +128,6 @@ class FullOrdersController {
       if (rol === "superadmin" || rol === "admin") {
         //search all fullorders
         const allFullOrders = await FullOrders.findAll();
-        if (!allFullOrders) {
-          res.status(404);
-        }
 
         res.status(200).send(allFullOrders);
       } else {
@@ -152,11 +149,10 @@ class FullOrdersController {
       const { rol } = req.user;
 
       if (rol === "superadmin" || rol === "admin") {
-        //search all fullorders
-        const updatedstate = await FullOrders.update(
-          { state },
-          { where: { state: req.body.state } }
-        );
+
+        //search and update a fullorder
+        const { id, state } = req.body;
+        const updatedstate = await FullOrders.update({ state }, { where: { id } });
 
         res.status(200).send(updatedstate);
       } else {

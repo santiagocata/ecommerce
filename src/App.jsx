@@ -10,6 +10,9 @@ import Footer from './component/Footer'
 import Eliminar from './component/Eliminar'
 import Editar from './component/Editar'
 import Configuracion from "./component/Configuracion";
+
+import CrearCategoria from "./component/CrearCategoria";
+
 import AddAdmins from "./component/AddAdmins";
 import DeleteAdmins from "./component/DeleteAdmins";
 
@@ -51,6 +54,7 @@ const App = () => {
         <Route path="/search" element={<Grid products={state} />} />
         <Route path="/configuracion" element={<Configuracion />} />
         <Route path="/admin" element={useRol === "superadmin" || useRol === "admin" ? <Admin /> : <Error />} />
+        <Route path="/admin/crearcategoria" element={useRol === "superadmin" || useRol === "admin" ? <CrearCategoria /> : <Error />} />
         <Route path="/admin/agregar" element={useRol === "superadmin" || useRol === "admin" ? <Agregar /> : <Error />} />
         <Route path="/admin/eliminar" element={useRol === "superadmin" || useRol === "admin" ? <Eliminar /> : <Error />}/>
         <Route path="/admin/editar" element={useRol === "superadmin" || useRol === "admin" ? <Editar /> : <Error />}/>

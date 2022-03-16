@@ -7,7 +7,7 @@ router.get("/", CartItemsController.getCart);
 ///Add to current cart
 router.post("/", CartItemsController.addToCart);
 ///Remove from current cart
-router.delete("/", CartItemsController.removeFromCart);
+router.delete("/:id", CartItemsController.removeFromCart);
 ///Edit cartItem quantity
 router.put("/", CartItemsController.editQuantity);
 

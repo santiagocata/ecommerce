@@ -26,6 +26,8 @@ import axios from "axios";
 import { setUser } from "../state/user";
 import React, { useEffect, useState } from "react";
 import store from "../state/store";
+import OrdersHistory from "./OrdersHistory";
+import Cart from "./Cart";
 import SearchInput from "./Search";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
@@ -89,10 +91,10 @@ export default function WithAction() {
           <HStack alignItems={"center"}>
             <Linked to="/">
               <HStack>
-                <Box size={"lg"}>
+                <Box boxSize="40px">
                   <Image
                     boxSize="40px"
-                    src="https://w7.pngwing.com/pngs/186/205/png-transparent-react-native-react-logos-brands-icon.png"
+                    src={require("../assets/img/pngwing.com.png")}
                   />
                 </Box>
                 <Box>
@@ -154,9 +156,7 @@ export default function WithAction() {
               <SearchInput />
             </Flex>
             <Box>
-              <Button variant={"solid"} colorScheme={"blue"} size={"sm"} mr={4}>
-                <FiShoppingCart />
-              </Button>
+              <Cart />
             </Box>
 
             <Menu>
@@ -186,10 +186,11 @@ export default function WithAction() {
               )}
               {usuario.id ? (
                 <MenuList>
+
                   <Linked to="/configuracion">
                     <MenuItem>Configuración</MenuItem>
                   </Linked>
-                  <MenuItem>Historial</MenuItem>
+                  <OrdersHistory />
                   <MenuItem onClick={handeLogOut}>Cerrar Sesión</MenuItem>
                 </MenuList>
               ) : (

@@ -14,6 +14,14 @@ Reviews.init(
       type: DataTypes.TEXT,
       allowNull: true, //En requisitos especifica poder null
     },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     // Other model options go here

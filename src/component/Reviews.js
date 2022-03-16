@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import {useSelector } from "react-redux";
 
-  function Rating({ rating, numReviews }: RatingProps) {
+  function Rating({ rating}: RatingProps) {
     return (
       <Box d="flex" alignItems="center">
         {Array(5)
@@ -35,9 +35,7 @@ import {useSelector } from "react-redux";
             }
             return <BsStar key={i} style={{ marginLeft: '1' }} />;
           })}
-        <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {numReviews} {numReviews > 1 && 's'}
-        </Box>
+      
       </Box>
     );
   }
@@ -122,7 +120,6 @@ import {useSelector } from "react-redux";
   }
   
   export default function Reviews() {
-  
 
     const [testimonials, setTestimonials] = useState([])
 
@@ -132,11 +129,11 @@ import {useSelector } from "react-redux";
       axios.get(`/reviews/${id}`)
       .then((res) => res.data)
       .then((testimonials) => {
-        
         setTestimonials(testimonials)
+
       })
-      .catch((err) => console.log('error'))
-    }, [])
+      .catch((err) => console.log('error', err))
+    }, [id])
 
     return (
       <Flex

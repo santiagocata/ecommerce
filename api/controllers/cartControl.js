@@ -1,4 +1,4 @@
-const { CartItems } = require("../models");
+const { CartItems, Products } = require("../models");
 
 class CartItemsController {
   ///// GET FULL CART
@@ -11,7 +11,14 @@ class CartItemsController {
       const userCartItems = await CartItems.findAll({
         where: { userId: id, state: "unconfirmed" },
       });
-      res.status(200).send(userCartItems);
+      const userCompleteCart = await Promise.all(
+        userCartItems.map(async (cartItem) => {
+          let product = await Products.findByPk(cartItem.productId);
+          cartItem.dataValues.product = product.dataValues;
+          return cartItem;
+        })
+      );
+      res.status(200).send(userCompleteCart);
     } catch (error) {
       console.error(error);
     }
@@ -42,12 +49,14 @@ class CartItemsController {
     }
     try {
       //FRONT MUST SEND cartItemID to DELETE
-      const { cartItemId } = req.body;
+     
+      const cartItemId  = req.params.id;
+
       //Control cartitem state
       const cartItem = await CartItems.findByPk(cartItemId);
       if (cartItem.state !== "unconfirmed") {
         res.sendStatus(401);
-      }
+      } 
       //////remove cartItem
       const removedCartItem = await CartItems.destroy({
         where: { id: cartItemId },
@@ -69,7 +78,7 @@ class CartItemsController {
       const cartItem = await CartItems.findByPk(cartItemId);
       if (cartItem.state !== "unconfirmed") {
         res.sendStatus(401);
-      }
+      }  
       ////update cartItem
       const updatedCardItem = await CartItems.update(
         { quantity },

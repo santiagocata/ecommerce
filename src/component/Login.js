@@ -21,7 +21,13 @@ import {
   FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
+import {
+  FaUserAlt,
+  FaLock,
+  FaGoogle,
+  FaGithub,
+  FaFacebook,
+} from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
 const CFaUserAlt = chakra(FaUserAlt);
@@ -39,6 +45,16 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const googleLogin = () => {
+    window.open("http://localhost:3001/login/google", "_self");
+  };
+  const facebookLogin = () => {
+    window.open("http://localhost:3001/login/facebook", "_self");
+  };
+  const githubLogin = () => {
+    window.open("http://localhost:3001/login/github", "_self");
+  };
 
   const onSubmit = (data) => {
     axios
@@ -135,8 +151,50 @@ const Login = () => {
               >
                 Iniciar
               </Button>
+              <Stack >
+                  <Button
+                    size="md"
+                    bg={"red.400"}
+                    color={"white"}
+                    _hover={{
+                      bg: "red.500",
+                    }}
+                    type="submit"
+                    onClick={googleLogin}
+                  >
+                    <FaGoogle style={{ margin: 4 }} />
+                    Google
+                  </Button>
+                  <Button
+                    size="md"
+                    bg={"blue.600"}
+                    color={"white"}
+                    _hover={{
+                      bg: "blue.700",
+                    }}
+                    type="submit"
+                    onClick={facebookLogin}
+                  >
+                    <FaFacebook style={{ margin: 4 }} />
+                    Facebook
+                  </Button>
+                  <Button
+                    size="md"
+                    bg={"black"}
+                    color={"white"}
+                    _hover={{
+                      bg: "black.800",
+                    }}
+                    type="submit"
+                    onClick={githubLogin}
+                  >
+                    <FaGithub style={{ margin: 4 }} />
+                    GitHub
+                  </Button>
+                </Stack>
             </Stack>
           </form>
+          
         </Box>
       </Stack>
       <Box>

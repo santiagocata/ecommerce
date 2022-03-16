@@ -44,10 +44,10 @@ export default function Simple() {
     });
     return (
     toast({
-          title: 'Exitoso',
-          description: "El producto seleccionado ha sido agregado a su carrito exitoamente",
+          title: 'El producto ha sido agregado al carrito exitosamente!',
+          description: "Para finalizar la compra dirijase a el",
           status: 'success',
-          duration: 4000,
+          duration: 5000,
           isClosable: true,
         })
     )

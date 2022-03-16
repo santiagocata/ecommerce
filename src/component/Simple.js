@@ -18,13 +18,8 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  AspectRatio,
   Input,
+  useToast
 } from "@chakra-ui/react";
 
 import { MdLocalShipping } from "react-icons/md";
@@ -34,6 +29,7 @@ export default function Simple() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [cant, setCant] = useState("");
+  const toast = useToast()
 
   const handlerCant = (e) => {
     const cantN = parseInt(e.target.value);
@@ -47,6 +43,15 @@ export default function Simple() {
       productId: id,
       quantity: cant,
     });
+    return (
+    toast({
+          title: 'Exitoso',
+          description: "El producto seleccionado ha sido agregado a su carrito exitoamente",
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
+    )
   };
   useEffect(() => {
     axios

@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
 
 const sendGmail = (email, newFullOrder, productsInvolve) => {
-  console.log("email en mailsender", email);
-  console.log("products en mailsender", productsInvolve);
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     post: 465,

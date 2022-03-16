@@ -21,6 +21,9 @@ const GOOGLE_CLIENT_ID =
 
 const GOOGLE_CLIENT_SECRET = "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";
 
+const FACEBOOK_APP_ID = "1171125987036152";
+const FACEBOOK_APP_SECRET = "8237afbe685484be70bed073f82db05d";
+
 const GITHUB_CLIENT_ID = "Iv1.a83a0ea30be6ae75";
 const GITHUB_CLIENT_SECRET = "30bd12dad30fb79ee5cb453a7ccfd35b18409d3d";
 
@@ -80,15 +83,52 @@ passport.use(
 );
 
 passport.use(
+  new FacebookStrategy(
+    {
+      clientID: FACEBOOK_APP_ID,
+      clientSecret: FACEBOOK_APP_SECRET,
+      callbackURL: "http://localhost:3001/login/facebook/callback",
+      profileFields: [
+        "id",
+        "displayName",
+        "email",
+        "first_name",
+        "middle_name",
+        "last_name",
+      ],
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      const user = await Users.findOne({
+        where: { email: profile.emails[0].value },
+      });
+      if (user) {
+        return done(null, user);
+      }
+      if (!user) {
+        const newUser = await Users.create({
+          email: profile.emails[0].value,
+          name: profile.name.givenName,
+          lastName: profile.name.familyName,
+          password: profile.id,
+          address: "",
+        });
+        return done(null, newUser);
+      }
+      return done(null, false);
+    }
+  )
+);
+
+passport.use(
   new GithubStrategy(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      scope: ["user:email"],
       callbackURL: "http://localhost:3001/login/github/callback",
+      profileFields: ["email"],
     },
     async function (request, accessToken, refreshToken, profile, done) {
-      console.log(request);
       console.log(profile);
       const user = await Users.findOne({
         where: { email: profile.emails[0].value },

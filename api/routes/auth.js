@@ -39,7 +39,7 @@ router.post(
 
 router.get(
   "/login/facebook",
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
+  passport.authorize("facebook", { scope: ["email"] }),
   (req, res, next) => {
     try {
       res.status(200).send(req.user);
@@ -47,6 +47,13 @@ router.get(
       console.error(error);
     }
   }
+);
+router.get(
+  "/login/facebook/callback",
+  passport.authenticate("facebook", {
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "/login",
+  })
 );
 
 router.get(
@@ -69,17 +76,13 @@ router.get(
   })
 );
 
-router.get(
-  "/login/github",
-  passport.authenticate("github", { scope: ["user:email"] }),
-  (req, res, next) => {
-    try {
-      res.status(200).send(req.user);
-    } catch (error) {
-      console.error(error);
-    }
+router.get("/login/github", passport.authorize("github"), (req, res, next) => {
+  try {
+    res.status(200).send(req.user);
+  } catch (error) {
+    console.error(error);
   }
-);
+});
 
 router.get(
   "/login/github/callback",

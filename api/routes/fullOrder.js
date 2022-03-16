@@ -17,17 +17,17 @@ router.post("/confirm", FullOrdersController.confirmCart);
 //Ruta que devuelva historial de fullorders del usuario logeado
 /////INPUT = USUARIO LOGEADO
 /////OUTPUT = FULLORDERS del usuario + productos involucrados en los CartItems que conforman la FullOrder
-router.get("/:id");
+router.get("/history", FullOrdersController.fullOrdersHistory);
 
 //superadmin && admin ver lista de todas las ordenes de los usuarios , y poder modificar el status de dicha orden
 //(pendiente, confirmada, rechazada)
-router.get("/all", FullOrdersController.allOrders)
+router.get("/all", FullOrdersController.allOrders);
 
 //INPUT user roll = superadmin o admin
-//PROCESS 
+//PROCESS
 //OUTPUT todas la fullorders generadas por los usuarios
 
-router.put("/updstate", FullOrdersController.stateUpdate)
+router.put("/updstate", FullOrdersController.stateUpdate);
 //CONTROL ROL SUPERADMIN O ADMIN
 //INPUT FULLORDER (REQ.BODY) REQ.BODY DEBE ENVIAR ID Y STATE
 //PROCESS
@@ -41,7 +41,5 @@ router.put("/updstate", FullOrdersController.stateUpdate)
 //         pendiente
 //         confirmada
 //         rechazada
-
-
 
 module.exports = router;

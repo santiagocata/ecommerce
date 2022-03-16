@@ -5,7 +5,7 @@ const session = require("express-session");
 
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const GoogleStrategy = require("passport-google-oauth").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GithubStrategy = require("passport-github2").Strategy;
 
 const db = require("./config/db");
@@ -15,6 +15,14 @@ const authUser = require("./utils/authUser");
 const routes = require("./routes");
 
 const app = express();
+
+const GOOGLE_CLIENT_ID =
+  "538504340778-cgsb8ame44vrec263dna98jrbegd9536.apps.googleusercontent.com";
+
+const GOOGLE_CLIENT_SECRET = "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";
+
+const GITHUB_CLIENT_ID = "Iv1.a83a0ea30be6ae75";
+const GITHUB_CLIENT_SECRET = "30bd12dad30fb79ee5cb453a7ccfd35b18409d3d";
 
 app.use(morgan("tiny"));
 app.use(express.json());
@@ -41,6 +49,68 @@ passport.use(
     authUser
   )
 );
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3001/login/google/callback",
+      passReqToCallback: true,
+    },
+    async function (request, accessToken, refreshToken, profile, done) {
+      const user = await Users.findOne({
+        where: { email: profile.emails[0].value },
+      });
+      if (user) {
+        return done(null, user);
+      }
+      if (!user) {
+        const newUser = await Users.create({
+          email: profile.emails[0].value,
+          name: profile.name.givenName,
+          lastName: profile.name.familyName,
+          password: profile.id,
+          address: "",
+        });
+        return done(null, newUser);
+      }
+      return done(null, false);
+    }
+  )
+);
+
+passport.use(
+  new GithubStrategy(
+    {
+      clientID: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+      scope: ["user:email"],
+      callbackURL: "http://localhost:3001/login/github/callback",
+    },
+    async function (request, accessToken, refreshToken, profile, done) {
+      console.log(request);
+      console.log(profile);
+      const user = await Users.findOne({
+        where: { email: profile.emails[0].value },
+      });
+      if (user) {
+        return done(null, user);
+      }
+      if (!user) {
+        const newUser = await Users.create({
+          email: profile.emails[0].value,
+          name: profile.name.givenName,
+          lastName: profile.name.familyName,
+          password: profile.id,
+          address: "",
+        });
+        return done(null, newUser);
+      }
+      return done(null, false);
+    }
+  )
+);
+
 ///Serialize and de-serialize auth user
 passport.serializeUser((user, done) => {
   done(null, user.id);

@@ -37,7 +37,7 @@ router.post(
   }
 );
 
-router.post(
+router.get(
   "/login/facebook",
   passport.authenticate("facebook", { failureRedirect: "/login" }),
   (req, res, next) => {
@@ -49,12 +49,9 @@ router.post(
   }
 );
 
-router.post(
+router.get(
   "/login/google",
-  passport.authenticate("google", {
-    failureRedirect: "/login",
-    failureMessage: true,
-  }),
+  passport.authenticate("google", { scope: ["profile", "email"] }),
   (req, res, next) => {
     try {
       res.status(200).send(req.user);
@@ -64,9 +61,17 @@ router.post(
   }
 );
 
-router.post(
+router.get(
+  "/login/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "/login",
+  })
+);
+
+router.get(
   "/login/github",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github", { scope: ["user:email"] }),
   (req, res, next) => {
     try {
       res.status(200).send(req.user);
@@ -74,6 +79,14 @@ router.post(
       console.error(error);
     }
   }
+);
+
+router.get(
+  "/login/github/callback",
+  passport.authenticate("github", {
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "/login",
+  })
 );
 
 router.post("/logout", (req, res, next) => {

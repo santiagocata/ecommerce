@@ -26,7 +26,7 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlphanumeric: true,
+
         min: 8
       },
 
@@ -69,6 +69,8 @@ Users.beforeCreate(async (user) => {
   user.salt = salt;
   user.password = hash;
 });
+
+
 
 // the defined model is the class itself
 module.exports = Users;

@@ -21,22 +21,27 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Agregar = () => {
-  const navigate = useNavigate()
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [toEdit, setToEdit] = useState("");
   const [product, setProduct] = useState({});
   const [productName, setProductName] = useState("");
   const [productDescription, setDescription] = useState("");
   const [productPrecio, setPrecio] = useState();
+  const [productoUrl, setProductoUrl] = useState();
 
   const handleSubmit = () => {
     axios
-      .put(`/products/${toEdit}`, { name:productName, price:productPrecio, description:productDescription})
-      .then((data) => {
-      alert("Se ha Modificado el Producto")
-      navigate("/")
+      .put(`/products/${toEdit}`, {
+        name: productName,
+        price: productPrecio,
+        description: productDescription,
+        image: productoUrl,
       })
-      .catch((err) => alert(err))
+      .then((data) => {
+        alert("Se ha Modificado el Producto");
+        navigate("/");
+      })
+      .catch((err) => alert(err));
   };
 
   useEffect(() => {
@@ -45,6 +50,7 @@ const Agregar = () => {
       setProductName(product.data.name);
       setDescription(product.data.description);
       setPrecio(product.data.price);
+      setProductoUrl(product.data.image);
     });
   }, [toEdit]);
 
@@ -80,7 +86,7 @@ const Agregar = () => {
             </FormControl>
             <HStack>
               <Box>
-                <FormControl id="name" isRequired>
+                <FormControl id="name">
                   <FormLabel>Nombre del Producto</FormLabel>
                   <Input
                     type="text"
@@ -93,7 +99,7 @@ const Agregar = () => {
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="number" isRequired>
+            <FormControl id="number">
               <FormLabel>Precio del Producto</FormLabel>
               <Input
                 type="number"
@@ -104,7 +110,7 @@ const Agregar = () => {
                 placeholder="Precio a Editar"
               />
             </FormControl>
-            <FormControl id="text" isRequired>
+            <FormControl id="text">
               <FormLabel>Descripcion Del Producto</FormLabel>
               <Input
                 type="text"
@@ -115,11 +121,20 @@ const Agregar = () => {
                 placeholder="Descripcion a Editar"
               />
             </FormControl>
+            <FormControl id="url">
+              <FormLabel>Imagen Del Producto</FormLabel>
+              <Input
+                type="url"
+                value={productoUrl}
+                onChange={(e) => {
+                  setProductoUrl(e.target.value);
+                }}
+                placeholder="Imagen a Editar"
+              />
+            </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
-                onClick={() =>
-                  handleSubmit()
-                }
+                onClick={() => handleSubmit()}
                 loadingText="Submitting"
                 size="lg"
                 bg={"blue.400"}

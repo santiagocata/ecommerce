@@ -13,32 +13,40 @@ import {
   Box,
   Image,
   Th,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   StatNumber,
   DrawerFooter,
   DrawerBody,
 } from "@chakra-ui/react";
-import { FiShoppingCart } from "react-icons/fi";
+import { setCart } from "../state/cart";
+import { FiShoppingCart} from "react-icons/fi";
+import { DeleteIcon } from '@chakra-ui/icons'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector} from "react-redux";
 
-/* get /cart */
-/* oost a cart */
-/* /put/cart */
-/* /delete/cart */
+
 
 function Cart() {
+  const dispatch = useDispatch();
+  const art = useSelector((state)=> state.cart)
+  console.log('variable globallllll',art)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-  const [cart, setCart] = useState([]);
+  const [newData, setNewData] = useState({});
 
-  useEffect(() => {
-    axios.get("/cart").then((data) => console.log(data));
-  }, []);
+  useEffect(()=>{
+ axios.get('/cart')
+ .then(cartItem=> cartItem.data)
+ .then(arti=> dispatch(setCart(arti)))
+ 
+  },[newData,])
+
+  const handleDelete= (id)=>{
+    console.log('DELETE ', id)
+    axios.delete(`/cart/${id}`)
+   
+    .then(data=> setNewData(data))
+  }
 
   return (
     <>
@@ -66,84 +74,48 @@ function Cart() {
 
           <br></br>
           <DrawerBody>
-            <Flex color="white">
-              <Center w="100px">
-                <Image
-                  boxSize="100px"
-                  objectFit="cover"
-                  src="https://bit.ly/dan-abramov"
-                  alt="Dan Abramov"
-                />
-              </Center>
-              <Square size="150px">
-                <Th color="Black">
-                  Nombre articulo
-                  <br></br>
-                  <NumberInput
-                    maxW="80px"
-                    defaultValue={1}
-                    max={300}
-                    clampValueOnBlur={false}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </Th>
-              </Square>
-              <Center>
-                <Box flex="1">
-                  <StatNumber color="black">
-                    <Th>$0.00</Th>
-                  </StatNumber>
-                </Box>
-              </Center>
-            </Flex>
-            <br></br>
-            <Divider orientation="horizontal" />
+             {
+           art?.map((artI=>{
 
-            <Flex color="white">
+              return(
+              <>
+               <Flex color="white">
               <Center w="100px">
                 <Image
                   boxSize="100px"
                   objectFit="cover"
-                  src="https://bit.ly/dan-abramov"
+                  src= {artI.product.image}
                   alt="Dan Abramov"
                 />
               </Center>
               <Square size="150px">
                 <Th color="Black">
-                  Nombre articulo
+                  {artI.product.name}
                   <br></br>
-                  <NumberInput
-                    maxW="80px"
-                    defaultValue={1}
-                    max={300}
-                    clampValueOnBlur={false}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
+                  Cantidad:{artI.quantity}
+                  <br></br>
+                   <Button onClick={(e)=>handleDelete(artI.id)}>
+                  <DeleteIcon/> 
+                   </Button>
                 </Th>
               </Square>
               <Center>
                 <Box flex="1">
                   <StatNumber color="black">
-                    <Th>$0.00</Th>
+                    <Th>${artI.quantity*artI.product.price}</Th>
                   </StatNumber>
                 </Box>
               </Center>
             </Flex>
             <br></br>
             <Divider orientation="horizontal" />
+        </>
+              )
+           })) }   
+      
           </DrawerBody>
           <DrawerFooter>
-            <Button>Confirmar Pedido</Button>
+            <Button>Continuar compra</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

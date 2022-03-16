@@ -10,6 +10,11 @@ import Footer from './component/Footer'
 import Eliminar from './component/Eliminar'
 import Editar from './component/Editar'
 import Configuracion from "./component/Configuracion";
+import AddAdmins from "./component/AddAdmins";
+import DeleteAdmins from "./component/DeleteAdmins";
+
+
+
 
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
@@ -49,6 +54,8 @@ const App = () => {
         <Route path="/admin/agregar" element={useRol === "superadmin" || useRol === "admin" ? <Agregar /> : <Error />} />
         <Route path="/admin/eliminar" element={useRol === "superadmin" || useRol === "admin" ? <Eliminar /> : <Error />}/>
         <Route path="/admin/editar" element={useRol === "superadmin" || useRol === "admin" ? <Editar /> : <Error />}/>
+        <Route path="/admin/agregaradmin" element={useRol === "superadmin" || useRol === "admin" ? <AddAdmins /> : <Error />}/>
+        <Route path="/admin/deleteadmin" element={useRol === "superadmin" || useRol === "admin" ? <DeleteAdmins /> : <Error />}/>
       </Routes>
       <div>
         <footer>

@@ -27,7 +27,7 @@ function Admin() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Panel de Admin</Heading>
         </Stack>
-        <Box rounded={"lg"} boxShadow={"lg"} p={8}>
+        <Box rounded={"lg"} boxShadow={"lg"} p={8} align={"center"}>
           <Stack spacing={4}>
             <FormControl id="text">
               <Linked to="/admin/agregar">
@@ -92,7 +92,7 @@ function Admin() {
               </Linked>
             </FormControl>
             <FormControl>
-              <Linked to="/admin/eliminaradmin">
+              <Linked to="/admin/deleteadmin">
                 <Button
                   loadingText="Submitting"
                   size="lg"

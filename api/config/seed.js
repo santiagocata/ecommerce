@@ -34,7 +34,7 @@ const setupSeed = async () => {
   return Promise.all([categories, products, users, reviews]);
 };
 
-db.sync()
+db.sync({force: true})
   .then(setupSeed)
   .then(() => {
     console.log("Seed succesfully");

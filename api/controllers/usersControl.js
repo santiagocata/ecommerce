@@ -67,7 +67,7 @@ class UsersController {
   static async setAdmin(req, res, next) {
     try {
       //Front send user ID to upgrade to admin role
-      const { id } = req.body;
+      const { id, newRol } = req.body;
       //control if id exist in DB
       if (!id) {
         res.sendStatus(409);
@@ -81,7 +81,7 @@ class UsersController {
         const { rol } = req.user;
         if (rol === "superadmin") {
           const newAdmin = await Users.update(
-            { rol: "admin" },
+            { rol: newRol },
             { where: { id } }
           );
           res.status(201).send(newAdmin);

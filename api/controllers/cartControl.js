@@ -7,18 +7,20 @@ class CartItemsController {
       res.sendStatus(401);
     }
     try {
-      const { id } = req.user;
-      const userCartItems = await CartItems.findAll({
-        where: { userId: id, state: "unconfirmed" },
-      });
-      const userCompleteCart = await Promise.all(
-        userCartItems.map(async (cartItem) => {
-          let product = await Products.findByPk(cartItem.productId);
-          cartItem.dataValues.product = product.dataValues;
-          return cartItem;
-        })
-      );
-      res.status(200).send(userCompleteCart);
+      if (req.user.id) {
+        const { id } = req.user;
+        const userCartItems = await CartItems.findAll({
+          where: { userId: id, state: "unconfirmed" },
+        });
+        const userCompleteCart = await Promise.all(
+          userCartItems.map(async (cartItem) => {
+            let product = await Products.findByPk(cartItem.productId);
+            cartItem.dataValues.product = product.dataValues;
+            return cartItem;
+          })
+        );
+        res.status(200).send(userCompleteCart);
+      }
     } catch (error) {
       console.error(error);
     }

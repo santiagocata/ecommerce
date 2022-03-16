@@ -13,6 +13,7 @@ CartItems.belongsTo(Users);
 CartItems.belongsTo(Products);
 OrderItems.belongsTo(CartItems);
 FullOrders.hasMany(OrderItems);
+FullOrders.belongsTo(Users);
 
 module.exports = {
   Users,

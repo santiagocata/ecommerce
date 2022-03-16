@@ -1,6 +1,6 @@
 const usersList = [
   {
-    email: "reactsport.info@gmail.com",
+    email: "superadmin@reactsport.com",
     password: "12345678",
     name: "React",
     lastName: "Sport",

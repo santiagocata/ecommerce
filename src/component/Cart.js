@@ -36,9 +36,9 @@ function Cart() {
   const btnRef = React.useRef();
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    axios.get("/cart").then((data) => console.log(data));
-  }, []);
+  // useEffect(() => {
+  //   axios.get("/cart").then((data) => console.log(data));
+  // }, []);
 
   return (
     <>

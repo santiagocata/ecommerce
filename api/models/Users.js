@@ -64,7 +64,7 @@ Users.afterCreate(async (user) => {
 });
 
 Users.beforeCreate(async (user) => {
-  const salt = await bcrypt.genSalt(16);
+  const salt = await bcrypt.genSalt(1);
   const hash = await user.hash(user.password, salt);
   user.salt = salt;
   user.password = hash;

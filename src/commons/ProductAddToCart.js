@@ -30,6 +30,7 @@ function Rating({ rating }: RatingProps) {
 }
 
 function ProductAddToCart({ data }) {
+  
   const [rating, setRating] = useState([]);
   useEffect(() => {
     axios

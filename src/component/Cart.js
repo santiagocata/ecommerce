@@ -58,10 +58,30 @@ function Cart() {
       .then((data) => setNewData(data));
   };
 
+  useEffect(() => {
+    axios
+      .get("/cart")
+      .then((cartItem) => cartItem.data)
+      .then((arti) => dispatch(setCart(arti)));
+  }, [newData]);
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`/cart/${id}`)
+
+      .then((data) => setNewData(data));
+  };
+
+  const getCart = async () => {
+    onOpen();
+    const cart = await axios.get("/cart");
+    dispatch(setCart(cart.data));
+  };
+
   return (
     <>
       <Button
-        onClick={onOpen}
+        onClick={getCart}
         variant={"solid"}
         colorScheme={"blue"}
         size={"sm"}
@@ -120,6 +140,7 @@ function Cart() {
                           </NumberInput>
                            {amount? <Th>${amount*artI.product.price}</Th>: <Th>${artI.quantity * artI.product.price}</Th>}
                     
+
                         </StatNumber>
                       </Box>
                     </Center>

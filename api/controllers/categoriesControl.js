@@ -72,7 +72,7 @@ class CategoriesController {
         ///FRONT MUST SEND name OF NEW CATEGORY
         const { categoryId, newCategoryName } = req.body;
         const updatedCategory = await Categories.update(
-          { newCategoryName },
+          { name: newCategoryName },
           { where: { id: categoryId } }
         );
         res.status(201).send(updatedCategory);

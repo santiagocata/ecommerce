@@ -93,7 +93,7 @@ export default function SmallCentered() {
           justify={{ base: "center", md: "space-between" }}
           align={{ base: "center", md: "center" }}
         >
-          <Text>© 2020 Chakra Templates.</Text>
+          <Text>© 2022 React Sports</Text>
           <Stack direction={"row"} spacing={6}>
             <SocialButton  label={"Twitter"}>
               <FaTwitter />

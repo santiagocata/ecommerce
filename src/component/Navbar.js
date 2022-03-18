@@ -20,7 +20,7 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon, EditIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../state/user";
@@ -49,6 +49,9 @@ export default function WithAction() {
   const dispatch = useDispatch();
   const useRol = useSelector((state) => state.user.rol);
   const [categories, setCategories] = useState([]);
+
+
+ 
 
   useEffect(() => {
     axios
@@ -133,18 +136,15 @@ export default function WithAction() {
               </Menu>
               {useRol === "superadmin" || useRol === "admin" ? (
                 <Linked to="/admin">
-                  <Button
-                    height="40px"
-                    loadingText="Submitting"
-                    size="lg"
-                    bg={"blue.500"}
-                    color={"white"}
-                    _hover={{
-                      bg: "blue.500",
-                    }}
-                  >
-                    Panel Admin
-                  </Button>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      colorScheme="blue"
+                      rightIcon={<EditIcon />}
+                    >
+                      Panel Admin
+                    </MenuButton>
+                  </Menu>
                 </Linked>
               ) : (
                 <></>
@@ -186,7 +186,6 @@ export default function WithAction() {
               )}
               {usuario.id ? (
                 <MenuList>
-
                   <Linked to="/configuracion">
                     <MenuItem>Configuración</MenuItem>
                   </Linked>

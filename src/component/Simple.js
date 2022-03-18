@@ -3,7 +3,8 @@ import Reviews from "./Reviews";
 import FormReviews from "./FormReviews";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector} from "react-redux";
+
 import {
   Box,
   Container,
@@ -18,23 +19,53 @@ import {
   StackDivider,
   useColorModeValue,
   Input,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 
 import { MdLocalShipping } from "react-icons/md";
 
 export default function Simple() {
+
+  const reviews = useSelector((state) => state.reviews);
+
   const usuario = useSelector((state) => state.user);
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [cant, setCant] = useState("");
-  const toast = useToast()
+  const toast = useToast();
+  const [historial, setHistorial] = useState([]);
+  let compra = false;
+  let found = false;
+
+  useEffect(() => {
+    axios
+      .get("/order/history")
+      .then((res) => res.data)
+      .then((resultado) => {
+        setHistorial(resultado);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+
+  historial.map((order) => {
+    order.products.map((product) => {
+      if (product.id == id) {
+        compra = true;
+      }
+    });
+  });
+
+  reviews.map((review) => {
+    if(review.userId == usuario.id && review.productId==id){
+      found = true
+    }
+  })
 
   const handlerCant = (e) => {
     const cantN = parseInt(e.target.value);
     setCant(cantN);
   };
-  console.log(cant);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -42,16 +73,15 @@ export default function Simple() {
       productId: id,
       quantity: cant,
     });
-    return (
-    toast({
-          title: 'El producto ha sido agregado al carrito exitosamente!',
-          description: "Para finalizar la compra dirijase a el",
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        })
-    )
+    return toast({
+      title: "El producto ha sido agregado al carrito exitosamente!",
+      description: "Para finalizar la compra dirijase a el",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
   };
+
   useEffect(() => {
     axios
       .get(`/products/${id}`)
@@ -137,7 +167,7 @@ export default function Simple() {
             <MdLocalShipping />
             <Text>2-3 días hábiles de entrega</Text>
           </Stack>
-          {usuario.id ? <FormReviews id={id} /> : <></>}
+          {usuario.id && compra && found!=true ? <FormReviews id={id} /> : <></>}
         </Stack>
       </SimpleGrid>
 
@@ -145,3 +175,4 @@ export default function Simple() {
     </Container>
   );
 }
+

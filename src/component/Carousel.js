@@ -121,14 +121,19 @@ const Carousel = () => {
             <Container size="container.lg" height="600px" position="relative">
               <Stack
                 spacing={6}
-                w={"full"}
                 maxW={"lg"}
                 position="absolute"
                 top="50%"
                 transform="translate(0, -50%)"
               >
-                <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
-                  {card.title}
+                <Heading
+                  borderRadius="xl"
+                  backdropFilter="auto"
+                  backdropBlur='8px'
+                  fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+                  position="relative"
+                >
+                  <Text align="center">{card.title}</Text>
                 </Heading>
                 <Text
                   fontSize={{ base: "md", lg: "lg" }}

@@ -31,8 +31,6 @@ function OrdersHistory() {
       .then((res) => res.data)
       .then((cart) => setOrders(cart))
       .catch((err) => console.log("Error", err));
-
-    console.log("ORDERS", orders);
   }, []);
 
   // const orderss = [

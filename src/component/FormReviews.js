@@ -38,7 +38,10 @@ export default function FormReviews({ id }) {
         productId: id,
         userId: usuario.id,
       })
-      .then((respuesta) => respuesta.data)
+      .then((respuesta) => {
+        console.log("respuesta.data => ",respuesta.data)
+        // respuesta.data
+      })
       .then(() => {
         alert("Tu comentario fue posteado");
         navigate("/");

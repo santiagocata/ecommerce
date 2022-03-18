@@ -10,9 +10,18 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
+
 const IMAGE =
   "https://josefacchin.com/wp-content/uploads/2018/09/error-404-http-not-found.png";
 export default function ProductSimple() {
+  const navigate = useNavigate();
+
+ /*  useEffect(() => {
+    navigate("/404");
+  }, []); */
+
   return (
     <Center py={12}>
       <Box
@@ -65,16 +74,16 @@ export default function ProductSimple() {
             404 Not Found
           </Heading>
           <Stack direction={"row"} align={"center"}>
-              <Linked to="/">
-            <Button
-              colorScheme="blue"
-              bgGradient="linear(to-r, blue.400, blue.500, blue.600)"
-              color="white"
-              variant="solid"
-            >
-             Volver al Inicio
-            </Button>
-              </Linked>
+            <Linked to="/">
+              <Button
+                colorScheme="blue"
+                bgGradient="linear(to-r, blue.400, blue.500, blue.600)"
+                color="white"
+                variant="solid"
+              >
+                Volver al Inicio
+              </Button>
+            </Linked>
           </Stack>
         </Stack>
       </Box>

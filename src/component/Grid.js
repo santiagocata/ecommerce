@@ -1,5 +1,4 @@
 import { SimpleGrid, GridItem, Box } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductAddToCart from "../commons/ProductAddToCart";
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function GridGeneral({ products }) {
   const navigate = useNavigate();
+
 
   const reviews = useSelector((state)=> state.reviews)
  
@@ -34,6 +34,7 @@ function GridGeneral({ products }) {
       .catch((err) => console.log(err));
   };
 
+
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(4);
 
@@ -52,13 +53,7 @@ function GridGeneral({ products }) {
     <Box p={6}>
       <SimpleGrid spacing="30px" minChildWidth="300px">
         {currentProduct?.map((product, i) => (
-          <Link to={`/products/${product.id}`}>
-            <ProductAddToCart
-              onClick={() => handleClick(product.id)}
-              key={i}
-              data={product}
-            />
-          </Link>
+          <ProductAddToCart key={i} data={product} />
         ))}
       </SimpleGrid>
       <Pagination

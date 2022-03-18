@@ -24,26 +24,25 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-
-
 function BuyFinalize({ id, num }) {
- 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
- 
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-const art= useSelector((state) => state.cart)
-  
+  const art = useSelector((state) => state.cart);
 
   const total = art.reduce((acc, item) => {
-    return !num ?(acc += item.product.price * item.quantity): (acc += item.product.price * num);
+    return !num
+      ? (acc += item.product.price * item.quantity)
+      : (acc += item.product.price * num);
   }, 0);
 
   const onSubmit = (data) => {
+    console.log(data);
     axios.post("/order/confirm", data);
     return toast({
       title: "La compra se realizo correctamente!",
@@ -53,12 +52,12 @@ const art= useSelector((state) => state.cart)
       isClosable: true,
     });
   };
-  
+
   const idCant = () => {
     axios.put("/cart", {
       quantity: num,
       cartItemId: id,
-    })
+    });
     onOpen();
   };
 
@@ -91,11 +90,14 @@ const art= useSelector((state) => state.cart)
                     <Tbody>
                       <Tr>
                         <Td>{artI.product.name}</Td>
-                        <Td>{num? num : artI.quantity}</Td>
+                        <Td>{num ? num : artI.quantity}</Td>
                         <Td isNumeric> ${artI.product.price}</Td>
                         <Td isNumeric>
                           {" "}
-                          ${num ? num* artI.product.price: artI.quantity* artI.product.price}
+                          $
+                          {num
+                            ? num * artI.product.price
+                            : artI.quantity * artI.product.price}
                         </Td>
                       </Tr>
                     </Tbody>
@@ -118,7 +120,7 @@ const art= useSelector((state) => state.cart)
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
-              {...register("adress", {
+              {...register("address", {
                 required: true,
                 message: "Ingrese una direccion",
               })}

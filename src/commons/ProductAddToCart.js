@@ -1,4 +1,3 @@
-
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -14,7 +13,6 @@ import {
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
-
 
 function Rating({ rating }: RatingProps) {
   return (
@@ -42,7 +40,6 @@ function Rating({ rating }: RatingProps) {
 }
 
 function ProductAddToCart({ data }) {
-
   const reviews = useSelector((state) => state.reviews);
 
   const [rating, setRating] = useState([]);
@@ -57,6 +54,19 @@ function ProductAddToCart({ data }) {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleClick = () => {
+    axios.post("/cart", {
+      productId: data.id,
+      quantity: 1,
+    });
+    return toast({
+      title: "El producto ha sido agregado al carrito exitosamente!",
+      description: "Para finalizar la compra dirijase a el",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
 
   let suma = 0;
   let i = 0;
@@ -70,20 +80,6 @@ function ProductAddToCart({ data }) {
 
   if (i != 0) {
     let promedio = suma / i;
-
-    const handleClick = () => {
-      axios.post("/cart", {
-        productId: data.id,
-        quantity: 1,
-      });
-      return toast({
-        title: "El producto ha sido agregado al carrito exitosamente!",
-        description: "Para finalizar la compra dirijase a el",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-    };
 
     return (
       <Flex p={50} w="full" alignItems="center" justifyContent="center">

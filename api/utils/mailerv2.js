@@ -25,8 +25,6 @@ const sendGmail = (email, newFullOrder, productsInvolve) => {
     if (error) {
       res.status(500).send(error.message);
     } else {
-      console.log("Email enviado correctamente");
-      console.log("CONSOLE_LOG DE NEWFULLORDER", newFullOrder)
       res.status(200).send(mailOptions);
     }
   });

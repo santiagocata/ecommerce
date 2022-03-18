@@ -50,9 +50,9 @@ class CategoriesController {
       const { rol } = req.user;
       if (rol === "superadmin" || rol === "admin") {
         ///FRONT MUST SEND name OF NEW CATEGORY
-        const { id } = req.param;
+        const { id } = req.params;
         console.log(id);
-        const erasedCategory = await Categories.destroy({ where: { id:id } });
+        const erasedCategory = await Categories.destroy({ where: { id: id } });
         res.sendStatus(200);
       } else {
         res.sendStatus(401);
@@ -73,7 +73,6 @@ class CategoriesController {
         ///FRONT MUST SEND name OF NEW CATEGORY
         const { categoryId, newCategoryName } = req.body;
         const updatedCategory = await Categories.update(
-
           { name: newCategoryName },
           { where: { id: categoryId } }
         );

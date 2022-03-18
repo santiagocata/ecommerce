@@ -89,6 +89,21 @@ function Admin() {
                 </Button>
               </Linked>
             </FormControl>
+            <FormControl id="text">
+              <Linked to="/admin/orders">
+                <Button
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Ver ordenes
+                </Button>
+              </Linked>
+            </FormControl>
             {useRol === "superadmin" ? (
               <>
                 <FormControl>

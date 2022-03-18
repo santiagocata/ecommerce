@@ -10,6 +10,7 @@ import Footer from "./component/Footer";
 import Eliminar from "./component/Eliminar";
 import Editar from "./component/Editar";
 import Configuracion from "./component/Configuracion";
+import OrdersAdmin from "./component/OrdersAdmin";
 
 import CrearCategoria from "./component/CrearCategoria";
 
@@ -59,6 +60,7 @@ const App = () => {
             <Route path="/admin/agregar" element={<Agregar />} />
             <Route path="/admin/eliminar" element={<Eliminar />} />
             <Route path="/admin/editar" element={<Editar />} />
+            <Route path="/admin/orders" element={<OrdersAdmin />} />
             {userRol === "superadmin" && (
               <>
                 <Route path="/admin/agregaradmin" element={<AddAdmins />} />

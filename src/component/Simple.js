@@ -48,8 +48,8 @@ export default function Simple() {
   }, []);
 
 
-  historial.map((order, i) => {
-    order.products.map((product, i) => {
+  historial.map((order) => {
+    order.products.map((product) => {
       if (product.id == id) {
         compra = true;
       }
@@ -82,6 +82,7 @@ export default function Simple() {
       isClosable: true,
     });
   };
+
   useEffect(() => {
     axios
       .get(`/products/${id}`)

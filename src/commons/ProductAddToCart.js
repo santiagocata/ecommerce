@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { Flex, Box, Image, Icon, chakra, Tooltip } from "@chakra-ui/react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 function Rating({ rating }: RatingProps) {
   return (
@@ -30,25 +29,19 @@ function Rating({ rating }: RatingProps) {
 }
 
 function ProductAddToCart({ data }) {
-  
-  const [rating, setRating] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`/reviews/${data.id}`)
-      .then((res) => res.data)
-      .then((rev) => {
-        setRating(rev);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
+  const reviews = useSelector((state) => state.reviews);
   let suma = 0;
-  for (let i = 0; i < rating.length; i++) {
-    suma += rating[i].vote;
-  }
+  let i = 0;
 
-  if (rating.length != 0) {
-    let promedio = suma / rating.length;
+  reviews.map((review) => {
+    if (review.productId == data.id) {
+      suma += review.vote;
+      i++;
+    }
+  });
+
+  if (i != 0) {
+    let promedio = suma / i;
 
     return (
       <Flex p={50} w="full" alignItems="center" justifyContent="center">
@@ -168,5 +161,3 @@ function ProductAddToCart({ data }) {
 }
 
 export default ProductAddToCart;
-
-

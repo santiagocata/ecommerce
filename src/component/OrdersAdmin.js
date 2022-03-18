@@ -32,7 +32,7 @@ const OrdersAdmin = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get(`/orders/all`).then((orders) => {
+    axios.get(`/order/all`).then((orders) => {
       setOrders(orders.data);
     });
   }, []);
@@ -55,7 +55,7 @@ const OrdersAdmin = () => {
             <Tr>
               <Td isNumeric>{order.id}</Td>
               <Td>{order.payment}</Td>
-              <Td>{order.adress}</Td>
+              <Td>{order.address}</Td>
               <Td>{order.state}</Td>
               <Td isNumeric>{order.total}</Td>
             </Tr>

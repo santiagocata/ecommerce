@@ -98,7 +98,6 @@ passport.use(
       ],
     },
     async function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
       const user = await Users.findOne({
         where: { email: profile.emails[0].value },
       });

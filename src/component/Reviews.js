@@ -1,17 +1,12 @@
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
 import {
-    Avatar,
     Box,
     chakra,
-    Container,
     Flex,
-    Icon,
     SimpleGrid,
     useColorModeValue,
   } from '@chakra-ui/react';
-import { useEffect, useState} from 'react';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
 import {useSelector } from "react-redux";
 
   function Rating({ rating}: RatingProps) {
@@ -121,19 +116,15 @@ import {useSelector } from "react-redux";
   
   export default function Reviews() {
 
-    const [testimonials, setTestimonials] = useState([])
-
+    const reviews = useSelector((state) => state.reviews);
     const {id} = useParams()
+    let revProd = [];
 
-    useEffect(() => {
-      axios.get(`/reviews/${id}`)
-      .then((res) => res.data)
-      .then((testimonials) => {
-        setTestimonials(testimonials)
-
-      })
-      .catch((err) => console.log('error', err))
-    }, [id])
+    reviews.map((review) => {
+      if(review.productId == id){
+        revProd.push(review)
+      }
+    })
 
     return (
       <Flex
@@ -165,7 +156,7 @@ import {useSelector } from "react-redux";
           spacing={'20'}
           mt={16}
           mx={'auto'}>
-          {testimonials?.map((cardInfo, index) => (
+          {revProd?.map((cardInfo, index) => (
             <TestimonialCard {...cardInfo} index={index} />
           ))}
           

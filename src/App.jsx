@@ -10,18 +10,20 @@ import Footer from "./component/Footer";
 import Eliminar from "./component/Eliminar";
 import Editar from "./component/Editar";
 import Configuracion from "./component/Configuracion";
+import OrdersAdmin from "./component/OrdersAdmin";
 
 import CrearCategoria from "./component/CrearCategoria";
 
 import AddAdmins from "./component/AddAdmins";
 import DeleteAdmins from "./component/DeleteAdmins";
 
-import { Route, Routes } from "react-router-dom";
+
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./state/user";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import Admin from "./component/Admin";
 import Error from "./component/Error";
 import ConfigUser from "./component/Configuracion";
@@ -30,12 +32,15 @@ import store from "./state/store";
 const App = () => {
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const useRol = useSelector((state) => state.user.rol);
+  const userRol = useSelector((state) => state.user.rol);
 
-  useEffect(async () => {
-    const userLoged = await axios.get("/wasLogged");
-    dispatch(setUser(userLoged.data));
-  }, {});
+  useEffect(() => {
+    axios.get("/wasLogged").then((userLoged) => {
+      dispatch(setUser(userLoged.data));
+    });
+  }, []);
+
+  /// Al refrescar la página, App.js renderiza 2 veces. La primera userRol toma valor "undefined" por más que el usuario este logeado y sea superadmin
 
   console.log(useRol);
   return (
@@ -51,76 +56,24 @@ const App = () => {
         <Route path="/categories/:id" element={<Categories />} />
         <Route path="/search" element={<Grid products={state} />} />
         <Route path="/configuracion" element={<Configuracion />} />
-        <Route
-          path="/admin"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <Admin />
-            ) : (
-              <Error />
-            )
-          }
-        />
-        <Route
-          path="/admin/crearcategoria"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <CrearCategoria />
-            ) : (
-              <Error />
-            )
-          }
-        />
-        <Route
-          path="/admin/agregar"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <Agregar />
-            ) : (
-              <Error />
-            )
-          }
-        />
-        <Route
-          path="/admin/eliminar"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <Eliminar />
-            ) : (
-              <Error />
-            )
-          }
-        />
-        <Route
-          path="/admin/editar"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <Editar />
-            ) : (
-              <Error />
-            )
-          }
-        />
-        <Route
-          path="/admin/agregaradmin"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <AddAdmins />
-            ) : (
-              <Error />
-            )
-          }
-        />
-        <Route
-          path="/admin/deleteadmin"
-          element={
-            useRol === "superadmin" || useRol === "admin" ? (
-              <DeleteAdmins />
-            ) : (
-              <Error />
-            )
-          }
-        />
+        {userRol?.includes("admin") && (
+          <>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/crearcategoria" element={<CrearCategoria />} />
+            <Route path="/admin/agregar" element={<Agregar />} />
+            <Route path="/admin/eliminar" element={<Eliminar />} />
+            <Route path="/admin/editar" element={<Editar />} />
+            <Route path="/admin/orders" element={<OrdersAdmin />} />
+            {userRol === "superadmin" && (
+              <>
+                <Route path="/admin/agregaradmin" element={<AddAdmins />} />
+                <Route path="/admin/deleteadmin" element={<DeleteAdmins />} />
+              </>
+            )}
+          </>
+        )}
+        <Route path="404" element={<Error />} />
+        {/* <Route path="*" element={<Navigate to="404" />} /> */}
       </Routes>
       <div>
         <footer>

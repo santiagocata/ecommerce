@@ -32,7 +32,9 @@ import BuyFinalize from "../commons/BuyFinalize";
 
 function Cart() {
   const dispatch = useDispatch();
+
   const art = useSelector((state) => state.cart);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [newData, setNewData] = useState({});
@@ -49,7 +51,6 @@ function Cart() {
   const handleAmount = (e, num)=>{
     setId(e)
     setAmount(num)
-
   }
   const handleDelete = (id) => {
     axios

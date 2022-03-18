@@ -66,7 +66,6 @@ export default function Simple() {
     const cantN = parseInt(e.target.value);
     setCant(cantN);
   };
-  console.log(cant);
 
   const handleClick = (e) => {
     e.preventDefault();

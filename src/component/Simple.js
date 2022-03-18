@@ -18,8 +18,8 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  Input,
   useToast,
+  Select
 } from "@chakra-ui/react";
 
 import { MdLocalShipping } from "react-icons/md";
@@ -71,7 +71,7 @@ export default function Simple() {
     e.preventDefault();
     axios.post("/cart", {
       productId: id,
-      quantity: cant,
+      quantity: cant ? cant : 1
     });
     return toast({
       title: "El producto ha sido agregado al carrito exitosamente!",
@@ -161,7 +161,15 @@ export default function Simple() {
           <Flex justifyContent="space-between" alignContent="center"></Flex>
 
           <Text fontSize={"lg"}>Cantidad:</Text>
-          <Input onChange={handlerCant}></Input>
+          <Select
+          onChange={handlerCant}
+            defaultValue={1}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </Select>
 
           <Stack direction="row" alignItems="center" justifyContent={"center"}>
             <MdLocalShipping />

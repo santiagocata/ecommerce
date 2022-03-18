@@ -91,7 +91,7 @@ function Cart() {
 
           <br></br>
           <DrawerBody>
-            {art?.map((artI) => {
+          {art?.map((artI) => {
               return (
                 <>
                   <Flex color="white">
@@ -107,12 +107,8 @@ function Cart() {
                       <Th color="Black">
                         {artI.product.name}
                         <br></br>
-                        {amount ? (
-                          <>Cantidad:{amount}</>
-                        ) : (
-                          <>Cantidad:{artI.quantity}</>
-                        )}
-
+                        {amount & id === artI.id  ? <>Cantidad:{amount}</> : <>Cantidad:{artI.quantity}</>}
+                        
                         <br></br>
                         <Button onClick={(e) => handleDelete(artI.id)}>
                           <DeleteIcon />
@@ -122,23 +118,15 @@ function Cart() {
                     <Center>
                       <Box flex="1">
                         <StatNumber color="black">
-                          <NumberInput
-                            defaultValue={amount ? amount : artI.quantity}
-                            min={1}
-                            max={20}
-                            onChange={(e) => handleAmount(artI.id, e)}
-                          >
-                            <NumberInputField />
-                            <NumberInputStepper>
-                              <NumberIncrementStepper />
+                          <NumberInput defaultValue={amount & id === artI.id ? amount : artI.quantity} min={1} max={20} onChange={(e)=>handleAmount(artI.id, e)}>
+                            <NumberInputField/>
+                            <NumberInputStepper  >
+                              <NumberIncrementStepper  />
                               <NumberDecrementStepper />
                             </NumberInputStepper>
                           </NumberInput>
-                          {amount ? (
-                            <Th>${amount * artI.product.price}</Th>
-                          ) : (
-                            <Th>${artI.quantity * artI.product.price}</Th>
-                          )}
+                           {amount & id === artI.id ? <Th>${amount*artI.product.price}</Th>: <Th>${artI.quantity * artI.product.price}</Th>}
+                    
                         </StatNumber>
                       </Box>
                     </Center>

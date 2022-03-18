@@ -9,7 +9,7 @@
 const { Model, DataTypes } = require("sequelize");
 const db = require("../config/db");
 
-class FullOrders extends Model {}
+class FullOrders extends Model { }
 
 FullOrders.init(
   {
@@ -22,9 +22,9 @@ FullOrders.init(
     },
     state: {
       type: DataTypes.STRING,
-      defaultValue: "create",
+      defaultValue: "Creada",
     },
-    adress: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },

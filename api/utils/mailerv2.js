@@ -13,9 +13,12 @@ const sendGmail = (email, newFullOrder, productsInvolve) => {
 
   const mailOptions = {
     from: `React Sport`,
-    to: `cdor.winslow@gmail.com, santiagoezequielcata@gmail.com`,
+    to: `${email}`,
     subject: `Confirmacion de compra Nª ${newFullOrder.id}`,
-    html: `<h1>test</h1>`,
+    html: `<h3>El estado de su compra es: ${newFullOrder.state}</h3>
+    <h3>La dirección de envío: ${newFullOrder.address}</h3>
+    <h3>Método de pago elegido : ${newFullOrder.payment}</h3>
+    <h3>El total de su compra es $${newFullOrder.total}</h3>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -23,6 +26,7 @@ const sendGmail = (email, newFullOrder, productsInvolve) => {
       res.status(500).send(error.message);
     } else {
       console.log("Email enviado correctamente");
+      console.log("CONSOLE_LOG DE NEWFULLORDER", newFullOrder)
       res.status(200).send(mailOptions);
     }
   });

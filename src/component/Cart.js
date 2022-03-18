@@ -16,6 +16,11 @@ import {
   StatNumber,
   DrawerFooter,
   DrawerBody,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper
 } from "@chakra-ui/react";
 import { setCart } from "../state/cart";
 import { FiShoppingCart } from "react-icons/fi";
@@ -23,6 +28,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import BuyFinalize from "../commons/BuyFinalize";
 
 function Cart() {
   const dispatch = useDispatch();
@@ -30,6 +36,27 @@ function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [newData, setNewData] = useState({});
+  const [amount, setAmount] = useState('');
+  const [id, setId]= useState();
+
+  useEffect(() => {
+    axios
+      .get("/cart")
+      .then((cartItem) => cartItem.data)
+      .then((arti) => dispatch(setCart(arti)));
+  }, [newData]);
+
+  const handleAmount = (e, num)=>{
+    setId(e)
+    setAmount(num)
+
+  }
+  const handleDelete = (id) => {
+    axios
+      .delete(`/cart/${id}`)
+
+      .then((data) => setNewData(data));
+  };
 
   useEffect(() => {
     axios
@@ -93,7 +120,8 @@ function Cart() {
                       <Th color="Black">
                         {artI.product.name}
                         <br></br>
-                        Cantidad:{artI.quantity}
+                        {amount ? <>Cantidad:{amount}</> : <>Cantidad:{artI.quantity}</>}
+                        
                         <br></br>
                         <Button onClick={(e) => handleDelete(artI.id)}>
                           <DeleteIcon />
@@ -103,7 +131,16 @@ function Cart() {
                     <Center>
                       <Box flex="1">
                         <StatNumber color="black">
-                          <Th>${artI.quantity * artI.product.price}</Th>
+                          <NumberInput defaultValue={amount? amount : artI.quantity} min={1} max={20} onChange={(e)=>handleAmount(artI.id, e)}>
+                            <NumberInputField/>
+                            <NumberInputStepper  >
+                              <NumberIncrementStepper  />
+                              <NumberDecrementStepper />
+                            </NumberInputStepper>
+                          </NumberInput>
+                           {amount? <Th>${amount*artI.product.price}</Th>: <Th>${artI.quantity * artI.product.price}</Th>}
+                    
+
                         </StatNumber>
                       </Box>
                     </Center>
@@ -115,7 +152,7 @@ function Cart() {
             })}
           </DrawerBody>
           <DrawerFooter>
-            <Button>Continuar compra</Button>
+            <BuyFinalize id={id} num={amount}/>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

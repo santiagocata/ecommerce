@@ -20,7 +20,7 @@ import {
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
-  NumberDecrementStepper
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { setCart } from "../state/cart";
 import { FiShoppingCart } from "react-icons/fi";
@@ -38,8 +38,8 @@ function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [newData, setNewData] = useState({});
-  const [amount, setAmount] = useState('');
-  const [id, setId]= useState();
+  const [amount, setAmount] = useState("");
+  const [id, setId] = useState();
 
   useEffect(() => {
     axios
@@ -48,24 +48,10 @@ function Cart() {
       .then((arti) => dispatch(setCart(arti)));
   }, [newData]);
 
-  const handleAmount = (e, num)=>{
-    setId(e)
-    setAmount(num)
-  }
-  const handleDelete = (id) => {
-    axios
-      .delete(`/cart/${id}`)
-
-      .then((data) => setNewData(data));
+  const handleAmount = (e, num) => {
+    setId(e);
+    setAmount(num);
   };
-
-  useEffect(() => {
-    axios
-      .get("/cart")
-      .then((cartItem) => cartItem.data)
-      .then((arti) => dispatch(setCart(arti)));
-  }, [newData]);
-
   const handleDelete = (id) => {
     axios
       .delete(`/cart/${id}`)
@@ -121,8 +107,12 @@ function Cart() {
                       <Th color="Black">
                         {artI.product.name}
                         <br></br>
-                        {amount ? <>Cantidad:{amount}</> : <>Cantidad:{artI.quantity}</>}
-                        
+                        {amount ? (
+                          <>Cantidad:{amount}</>
+                        ) : (
+                          <>Cantidad:{artI.quantity}</>
+                        )}
+
                         <br></br>
                         <Button onClick={(e) => handleDelete(artI.id)}>
                           <DeleteIcon />
@@ -132,16 +122,23 @@ function Cart() {
                     <Center>
                       <Box flex="1">
                         <StatNumber color="black">
-                          <NumberInput defaultValue={amount? amount : artI.quantity} min={1} max={20} onChange={(e)=>handleAmount(artI.id, e)}>
-                            <NumberInputField/>
-                            <NumberInputStepper  >
-                              <NumberIncrementStepper  />
+                          <NumberInput
+                            defaultValue={amount ? amount : artI.quantity}
+                            min={1}
+                            max={20}
+                            onChange={(e) => handleAmount(artI.id, e)}
+                          >
+                            <NumberInputField />
+                            <NumberInputStepper>
+                              <NumberIncrementStepper />
                               <NumberDecrementStepper />
                             </NumberInputStepper>
                           </NumberInput>
-                           {amount? <Th>${amount*artI.product.price}</Th>: <Th>${artI.quantity * artI.product.price}</Th>}
-                    
-
+                          {amount ? (
+                            <Th>${amount * artI.product.price}</Th>
+                          ) : (
+                            <Th>${artI.quantity * artI.product.price}</Th>
+                          )}
                         </StatNumber>
                       </Box>
                     </Center>
@@ -153,7 +150,7 @@ function Cart() {
             })}
           </DrawerBody>
           <DrawerFooter>
-            <BuyFinalize id={id} num={amount}/>
+            <BuyFinalize id={id} num={amount} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

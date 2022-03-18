@@ -9,20 +9,13 @@ class FullOrdersController {
       res.sendStatus(401);
     }
     try {
-      //const { id, email } = req.user;
-
-      //PARA PROBAR LUEGO BORRAR/////////
-      const id = 10
-      const email = "waltermaza@gmail.com"
-      ///////////////////////////////////
-
+      const { id, email } = req.user;
       ////FRONT MUST SEND PAYMENT AND ADDRESS
       const { payment, address } = req.body;
       ///Search all cartitems from current user
       const cartItemsToConfirm = await CartItems.findAll({
         where: { userId: id, state: "unconfirmed" },
       });
-
       if (!cartItemsToConfirm) {
         res.sendStatus(401);
       }
@@ -70,6 +63,7 @@ class FullOrdersController {
           return orderItem;
         })
       );
+      console.log("newOrderItems", newOrderItems);
       ////Send confirmation email
       sendGmail(email, newFullOrder, productsInvolve);
 
@@ -148,31 +142,19 @@ class FullOrdersController {
   //
   static async stateUpdate(req, res) {
     //user is login?
-    // if (!req.user) {
-    //   res.sendStatus(401);
-    // }
+    if (!req.user) {
+      res.sendStatus(401);
+    }
     try {
-      //const { rol } = req.user;
-      const rol = "superadmin"
+      const { rol } = req.user;
 
       if (rol === "superadmin" || rol === "admin") {
-
         //search and update a fullorder
         const { id, state } = req.body;
-
-        //const updatedstate = await FullOrders.update({ state }, { where: { id } });
-        const updatedstate = await FullOrders.update({ state }, { where: { id }, returning: true, plain: true });
-        const newfullOrder = updatedstate
-
-        //Buscar usuario con newfullOrder.userId , findbyPk(userId)
-        //const infoUser = await Users.findByPk(newfullOrder.userId)
-        //console.log("CONSOLE.LOG DE INFO_USER", infoUser)
-        console.log("CONSOLE_LOG DE UPDATESTATE DENTRO DE STATEUPDATE", newfullOrder)
-        //guardar en constante
-        //ejecutar sendGmail(mail de usuario, newfullOrder)
-        // sendGmail("waltermaza@gmail.com", updatedstate)
-        sendGmail("waltermaza@gmail.com", newfullOrder)
-
+        const updatedstate = await FullOrders.update(
+          { state },
+          { where: { id } }
+        );
 
         res.status(200).send(updatedstate);
       } else {

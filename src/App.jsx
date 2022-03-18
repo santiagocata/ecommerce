@@ -17,7 +17,6 @@ import CrearCategoria from "./component/CrearCategoria";
 import AddAdmins from "./component/AddAdmins";
 import DeleteAdmins from "./component/DeleteAdmins";
 
-
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +41,6 @@ const App = () => {
 
   /// Al refrescar la página, App.js renderiza 2 veces. La primera userRol toma valor "undefined" por más que el usuario este logeado y sea superadmin
 
-  console.log(useRol);
   return (
     <div>
       <header>

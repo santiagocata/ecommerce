@@ -12,9 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 function GridGeneral({ products }) {
   const navigate = useNavigate();
 
+  const reviews = useSelector((state) => state.reviews);
 
-  const reviews = useSelector((state)=> state.reviews)
- 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,8 +22,6 @@ function GridGeneral({ products }) {
       .then((res) => res.data)
       .then((reviews) => dispatch(setReviews(reviews)));
   }, []);
-
-
 
   const handleClick = (id) => {
     axios
@@ -35,7 +32,6 @@ function GridGeneral({ products }) {
       })
       .catch((err) => console.log(err));
   };
-
 
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(4);
@@ -68,12 +64,10 @@ function GridGeneral({ products }) {
         <Box p={6}>
           <SimpleGrid spacing="30px" minChildWidth="300px">
             {currentProduct?.map((product, i) => (
-              <Link key={i} to={`/products/${product.id}`}>
-                <ProductAddToCart
-                  onClick={() => handleClick(product.id)}
-                  data={product}
-                />
-              </Link>
+              <ProductAddToCart
+                onClick={() => handleClick(product.id)}
+                data={product}
+              />
             ))}
           </SimpleGrid>
           <Pagination

@@ -29,7 +29,6 @@ import { useDispatch, useSelector} from "react-redux";
 function Cart() {
   const dispatch = useDispatch();
   const art = useSelector((state)=> state.cart)
-  console.log('variable globallllll',art)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [newData, setNewData] = useState({});
@@ -42,7 +41,6 @@ function Cart() {
   },[newData,])
 
   const handleDelete= (id)=>{
-    console.log('DELETE ', id)
     axios.delete(`/cart/${id}`)
    
     .then(data=> setNewData(data))

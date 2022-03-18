@@ -19,11 +19,11 @@ router.post("/by/name", async (req, res, next) => {
   res.status(200).send(products);
 });
 
-
 router.get("/by/category/:categoryId", async (req, res, next) => {
-  const products = await Products.findAll({where : {...req.params}});
+  const products = await Products.findAll({ where: { ...req.params } });
   res.status(200).send(products);
 });
+
 
 ///RUTAS PARA ADMIN {rol : "admin"}
 

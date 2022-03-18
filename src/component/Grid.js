@@ -1,4 +1,5 @@
-import { SimpleGrid, GridItem, Box } from "@chakra-ui/react";
+import { SimpleGrid, GridItem, Box, Text, Heading } from "@chakra-ui/react";
+import { InfoIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -24,30 +25,47 @@ function GridGeneral({ products }) {
 
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirtsProduct = indexOfLastProduct - productPerPage;
-  const currentProduct = products.slice(indexOfFirtsProduct, indexOfLastProduct);
+  const currentProduct = products.slice(
+    indexOfFirtsProduct,
+    indexOfLastProduct
+  );
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   return (
-    <Box p={6}>
-      <SimpleGrid spacing="30px" minChildWidth="300px">
-        {currentProduct?.map((product, i) => (
-          <Link to={`/products/${product.id}`}>
-            <ProductAddToCart
-              onClick={() => handleClick(product.id)}
-              key={i}
-              data={product}
-            />
-          </Link>
-        ))}
-      </SimpleGrid>
-      <Pagination
-        productPerPage={productPerPage}
-        totalProduct={products.length}
-        paginate={paginate}
-      />
+    <Box>
+      {products.length === 0 ? (
+        <Box textAlign="center" py={10} px={6}>
+          <InfoIcon boxSize={"50px"} color={"blue.500"} />
+          <Heading as="h2" size="xl" mt={6} mb={2}>
+            No se han encontrado productos
+          </Heading>
+          <Text color={"gray.500"}>
+            Por favor intenta ingresando otra especificación para buscar el
+            producto solicitado
+          </Text>
+        </Box>
+      ) : (
+        <Box p={6}>
+          <SimpleGrid spacing="30px" minChildWidth="300px">
+            {currentProduct?.map((product, i) => (
+              <Link key={i} to={`/products/${product.id}`}>
+                <ProductAddToCart
+                  onClick={() => handleClick(product.id)}
+                  data={product}
+                />
+              </Link>
+            ))}
+          </SimpleGrid>
+          <Pagination
+            productPerPage={productPerPage}
+            totalProduct={products.length}
+            paginate={paginate}
+          />
+        </Box>
+      )}
     </Box>
   );
 }

@@ -18,9 +18,11 @@ router.get("/:id", (req, res, next) => {
       .catch(next);
   });
 
+ 
+
 
 router.get("/", (req, res, next) => {
-    Reviews.findAll()
+    Reviews.findAll({include: [{model: Users, as: 'user'}]})
       .then((reviews) => res.status(200).send(reviews))
       .catch(next);
   });

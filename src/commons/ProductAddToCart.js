@@ -1,3 +1,5 @@
+
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -12,6 +14,7 @@ import {
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
+
 
 function Rating({ rating }: RatingProps) {
   return (
@@ -39,6 +42,9 @@ function Rating({ rating }: RatingProps) {
 }
 
 function ProductAddToCart({ data }) {
+
+  const reviews = useSelector((state) => state.reviews);
+
   const [rating, setRating] = useState([]);
   const toast = useToast();
   useEffect(() => {
@@ -51,13 +57,19 @@ function ProductAddToCart({ data }) {
       .catch((err) => console.log(err));
   }, []);
 
-  let suma = 0;
-  for (let i = 0; i < rating.length; i++) {
-    suma += rating[i].vote;
-  }
 
-  if (rating.length != 0) {
-    let promedio = suma / rating.length;
+  let suma = 0;
+  let i = 0;
+
+  reviews.map((review) => {
+    if (review.productId == data.id) {
+      suma += review.vote;
+      i++;
+    }
+  });
+
+  if (i != 0) {
+    let promedio = suma / i;
 
     const handleClick = () => {
       axios.post("/cart", {

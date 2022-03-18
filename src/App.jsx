@@ -58,8 +58,8 @@ const App = () => {
         <Route path="/admin/agregar" element={useRol === "superadmin" || useRol === "admin" ? <Agregar /> : <Error />} />
         <Route path="/admin/eliminar" element={useRol === "superadmin" || useRol === "admin" ? <Eliminar /> : <Error />}/>
         <Route path="/admin/editar" element={useRol === "superadmin" || useRol === "admin" ? <Editar /> : <Error />}/>
-        <Route path="/admin/agregaradmin" element={useRol === "superadmin" || useRol === "admin" ? <AddAdmins /> : <Error />}/>
-        <Route path="/admin/deleteadmin" element={useRol === "superadmin" || useRol === "admin" ? <DeleteAdmins /> : <Error />}/>
+        <Route path="/admin/agregaradmin" element={useRol === "superadmin" ? <AddAdmins /> : <Error />}/>
+        <Route path="/admin/deleteadmin" element={useRol === "superadmin" ? <DeleteAdmins /> : <Error />}/>
       </Routes>
       <div>
         <footer>

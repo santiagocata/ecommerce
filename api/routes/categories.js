@@ -10,7 +10,7 @@ router.get("/", CategoriesController.getAll);
 //create new product category
 router.post("/", CategoriesController.create);
 //Delete category
-router.delete("/", CategoriesController.delete);
+router.delete("/:id", CategoriesController.delete);
 //Edit category name
 router.put("/", CategoriesController.edit);
 

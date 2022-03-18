@@ -55,7 +55,7 @@ function Admin() {
                     bg: "blue.500",
                   }}
                 >
-                  Crear Categoria
+                  Administrar Categorias
                 </Button>
               </Linked>
             </FormControl>

@@ -95,7 +95,7 @@ export default function SmallCentered() {
         >
           <Text>© 2022 React Sports</Text>
           <Stack direction={"row"} spacing={6}>
-            <SocialButton label={"Twitter"}>
+            <SocialButton  label={"Twitter"}>
               <FaTwitter />
             </SocialButton>
             <SocialButton label={"YouTube"}>

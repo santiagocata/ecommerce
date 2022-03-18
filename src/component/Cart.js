@@ -111,7 +111,7 @@ function Cart() {
                     <Center>
                       <Box flex="1">
                         <StatNumber color="black">
-                          <NumberInput defaultValue={artI.quantity} min={1} max={20} onChange={(e)=>handleAmount(artI.id, e)}>
+                          <NumberInput defaultValue={amount? amount : artI.quantity} min={1} max={20} onChange={(e)=>handleAmount(artI.id, e)}>
                             <NumberInputField/>
                             <NumberInputStepper  >
                               <NumberIncrementStepper  />

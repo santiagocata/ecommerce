@@ -25,20 +25,22 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 
+
 function BuyFinalize({ id, num }) {
+ 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+ 
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const art = useSelector((state) => state.cart);
+const art= useSelector((state) => state.cart)
+  
 
   const total = art.reduce((acc, item) => {
-    return (acc += item.product.price * item.quantity);
+    return !num ?(acc += item.product.price * item.quantity): (acc += item.product.price * num);
   }, 0);
 
   const onSubmit = (data) => {
@@ -56,7 +58,7 @@ function BuyFinalize({ id, num }) {
     axios.put("/cart", {
       quantity: num,
       cartItemId: id,
-    });
+    })
     onOpen();
   };
 
@@ -89,11 +91,11 @@ function BuyFinalize({ id, num }) {
                     <Tbody>
                       <Tr>
                         <Td>{artI.product.name}</Td>
-                        <Td>{artI.quantity}</Td>
+                        <Td>{num? num : artI.quantity}</Td>
                         <Td isNumeric> ${artI.product.price}</Td>
                         <Td isNumeric>
                           {" "}
-                          ${artI.quantity * artI.product.price}
+                          ${num ? num* artI.product.price: artI.quantity* artI.product.price}
                         </Td>
                       </Tr>
                     </Tbody>

@@ -39,7 +39,6 @@ const App = () => {
     });
   }, []);
 
-  /// Al refrescar la página, App.js renderiza 2 veces. La primera userRol toma valor "undefined" por más que el usuario este logeado y sea superadmin
 
   return (
     <div>
